@@ -5,6 +5,14 @@ package se.su.dsv.pvt.utemaning.backend;
  * Inherits from Place
  */
 public class OutdoorGym extends Place{
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     private String description;
 
     public OutdoorGym(Location location, String name, int id,String uniqueId, String description){
