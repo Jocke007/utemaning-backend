@@ -41,9 +41,8 @@ public class BackendApplication {
     @RestController
     public class HelloJSONRestController2{
         @CrossOrigin
-        @ResponseBody
         @RequestMapping(value = "/outdoorgymtest", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-        public OutdoorGym response(@RequestParam("gymID") String gymID){
+        public @ResponseBody OutdoorGym response(@RequestParam("gymID") String gymID){
 
             int outdoorGymID = Integer.parseInt(gymID);
             DBManagement dbm = new DBManagement();
