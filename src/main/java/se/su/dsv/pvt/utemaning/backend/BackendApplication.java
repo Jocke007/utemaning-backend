@@ -36,6 +36,15 @@ public class BackendApplication {
             return gym;
         }
     }
+    @RestController
+    public class sendGym{
+	    @RequestMapping(value = "/gym", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+        public OutdoorGym sendGym(){
+	        Location l =  new Location(1, 2);
+	        OutdoorGym gym = new OutdoorGym(l, "name", 12, "Test", "testar");
+	        return gym;
+        }
+    }
 
         /*
         long miliseconds = System.currentTimeMillis();
