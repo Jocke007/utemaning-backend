@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 public class BackendApplication {
 
 	public static void main(String[] args) {
+
 		SpringApplication.run(BackendApplication.class, args);
 
 		/*
@@ -24,7 +25,7 @@ public class BackendApplication {
     public class HelloJSONRestController{
         @CrossOrigin
         @ResponseBody
-        @RequestMapping(value = "/outdoorgym/", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+        @RequestMapping(value = "/outdoorgym", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
         public OutdoorGym response(@RequestBody int gymID){
 
             int outdoorGymID = gymID;
