@@ -45,6 +45,15 @@ public class BackendApplication {
 	        return gym;
         }
     }
+    @RestController
+    public class sayHellp{
+        @RequestMapping(value = "/sayHello", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+        public String sayHello(){
+            return "Hello world";
+        }
+    }
+
+
 
         /*
         long miliseconds = System.currentTimeMillis();
