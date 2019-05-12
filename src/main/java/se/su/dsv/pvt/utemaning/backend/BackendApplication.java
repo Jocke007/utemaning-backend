@@ -35,6 +35,9 @@ public class BackendApplication {
             return gym;
         }
     }
+
+    //Den här får inget error men den verkar inte skicka tillbaka rätt informamtion. Vi borde testa att den
+    //faktiskt hämtar korrekt data från databasen
     @RestController
     public class HelloJSONRestController2{
         @CrossOrigin
@@ -49,7 +52,7 @@ public class BackendApplication {
         }
     }
 
-
+    //Den här är testad och skickar tillbaka objektets Challenge-list
     @RestController
     public class sendGym{
 	    @RequestMapping(value = "/gym", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
