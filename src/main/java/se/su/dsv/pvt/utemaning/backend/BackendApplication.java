@@ -41,7 +41,7 @@ public class BackendApplication {
     @RestController
     public class HelloJSONRestController2{
         @CrossOrigin
-        @RequestMapping(value = "/outdoorgymtest", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+        @RequestMapping(value = "outdoorgymtest", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
         public @ResponseBody OutdoorGym response(@RequestParam("gymID") String gymID){
 
             int outdoorGymID = Integer.parseInt(gymID);
@@ -51,7 +51,7 @@ public class BackendApplication {
         }
     }
 
-    //Den här är testad och skickar tillbaka objektets Challenge-list
+    //Den här är testad och skickar tillbaka objektets JSON-objekt
     @RestController
     public class sendGym{
 	    @RequestMapping(value = "/gym", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
