@@ -16,9 +16,6 @@ public class BackendApplication {
 
         SpringApplication.run(BackendApplication.class, args);
 
-
-
-
         DBManagement dbm = new DBManagement();
         OutdoorGym out = dbm.getOneOutdoorGym(3);
         System.out.println(out.getId());

@@ -20,6 +20,10 @@ public class OutdoorGym extends Place{
         this.description = description;
     }
 
+    public boolean getHasChallenge() {
+        return hasChallenge;
+    }
+
     // used for testing
     @Override
     public String toString(){
