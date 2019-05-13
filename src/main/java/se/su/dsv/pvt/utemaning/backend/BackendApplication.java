@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 
 
 @SpringBootApplication
@@ -18,7 +17,7 @@ public class BackendApplication {
 		SpringApplication.run(BackendApplication.class, args);
 
 
-/*
+
         DBManagement dbm = new DBManagement();
         OutdoorGym out = dbm.getOneOutdoorGym(3);
         System.out.println(out.getId());
@@ -26,32 +25,26 @@ public class BackendApplication {
         Collection<OutdoorGym> outdoorGymCollection = new ArrayList<>();
         outdoorGymCollection = dbm.getAllOutdoorGyms();
 
-        Iterator<OutdoorGym> i =outdoorGymCollection.iterator();
-        while(i.hasNext()){
-            OutdoorGym o = i.next();
-            System.out.println(o.getId());
-        }
 
-         */
 
 
         //TEST FetchJSONFromAPI (Print all gyms)
         //new FetchJSONFromAPI().parseFromAllOutdoorGyms();
 	}
 
-    @RestController
-    public class HelloJSONRestController{
-        @CrossOrigin
-        @ResponseBody
-        @RequestMapping(value = "/outdoorgym", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-        public OutdoorGym response(@RequestBody int gymID){
-
-            int outdoorGymID = gymID;
+	@RestController
+    public class getAllGyms{
+        @RequestMapping(value = "/allGyms", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+        public @ResponseBody Collection<OutdoorGym> getAllGyms(){
             DBManagement dbm = new DBManagement();
-            OutdoorGym gym = dbm.getOneOutdoorGym(outdoorGymID);
-            return gym;
+            Collection<OutdoorGym> allGyms;
+            allGyms = dbm.getAllOutdoorGyms();
+            return allGyms;
         }
     }
+
+
+
 
     //Den här får inget error men den verkar inte skicka tillbaka rätt informamtion. Vi borde testa att den
     //faktiskt hämtar korrekt data från databasen
