@@ -5,6 +5,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+
 
 @SpringBootApplication
 public class BackendApplication {
@@ -13,13 +17,26 @@ public class BackendApplication {
 
 		SpringApplication.run(BackendApplication.class, args);
 
-		/*
+
+/*
         DBManagement dbm = new DBManagement();
-        String userName = ("nills");
-        Collection<Challenge> challengeCollection = dbm.getAllChallenge();
-*/
+        OutdoorGym out = dbm.getOneOutdoorGym(3);
+        System.out.println(out.getId());
+
+        Collection<OutdoorGym> outdoorGymCollection = new ArrayList<>();
+        outdoorGymCollection = dbm.getAllOutdoorGyms();
+
+        Iterator<OutdoorGym> i =outdoorGymCollection.iterator();
+        while(i.hasNext()){
+            OutdoorGym o = i.next();
+            System.out.println(o.getId());
+        }
+
+         */
+
+
         //TEST FetchJSONFromAPI (Print all gyms)
-//	    new FetchJSONFromAPI().parseFromAllOutdoorGyms();
+        //new FetchJSONFromAPI().parseFromAllOutdoorGyms();
 	}
 
     @RestController

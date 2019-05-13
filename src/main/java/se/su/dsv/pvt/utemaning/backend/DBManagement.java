@@ -138,7 +138,7 @@ public class DBManagement {
         try {
             crs = ctpdb.getData(sqlQuery);
             while (crs.next()) {
-                OutdoorGym outdoorGym = buildOfOutdoorGym(crs);
+                OutdoorGym outdoorGym = buildOfOutdoorGym();
                 outdoorGymCollection.add(outdoorGym);
             }
         } catch (SQLException e) {
@@ -155,31 +155,32 @@ public class DBManagement {
      * @return returns the outdoorgym object
      */
     public OutdoorGym getOneOutdoorGym(int workoutSpotIdInput) {
-
-        String sqlQuery = ("SELECT * FROM OutdoorGym, Workoutspot, Location WHERE Workoutspot.WorkoutSpotId = OutdoorGym.WorkoutSpotId " +
-                "AND Workoutspot.WorkoutSpotId = " + workoutSpotIdInput
-                + " AND Workoutspot.WorkoutSpotId = Location.WorkoutSpotID");
+        String sqlQuery = ("SELECT * FROM OutdoorGym, Workoutspot, Location " +
+                "WHERE Workoutspot.WorkoutSpotId = OutdoorGym.WorkoutSpotId AND " +
+                "Workoutspot.WorkoutSpotId = Location.WorkoutSpotID AND " +
+                "OutdoorGym.WorkoutSpotId = ' "+workoutSpotIdInput+" ' ");
         OutdoorGym outdoorGym = null;
         try {
             crs = ctpdb.getData(sqlQuery);
             while (crs.next()) {
-                outdoorGym = buildOfOutdoorGym(crs);
+                outdoorGym = buildOfOutdoorGym();
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         if (outdoorGym != null) {
             return outdoorGym;
-        } else return null;
+        } else {
+            System.out.println("gym is null");
+            return null;
+        }
     }
 
     /**
      * private method to create outdoorgyms in an attempt to redude code
-     *
-     * @param crs input
      * @return outdoorgym
      */
-    private OutdoorGym buildOfOutdoorGym(CachedRowSet crs) {
+    private OutdoorGym buildOfOutdoorGym() {
         OutdoorGym outdoorGym = null;
         String uniqueIdTemp = "123-123123-asdasd (placeholder)";
         try {
