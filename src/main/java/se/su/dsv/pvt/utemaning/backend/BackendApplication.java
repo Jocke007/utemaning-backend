@@ -45,8 +45,6 @@ public class BackendApplication {
     }
 
 
-
-
     //Den här får inget error men den verkar inte skicka tillbaka rätt informamtion. Vi borde testa att den
     //faktiskt hämtar korrekt data från databasen
     @RestController
@@ -62,16 +60,16 @@ public class BackendApplication {
         }
     }
 
-    //Den här är testad och skickar tillbaka objektets JSON-objekt
-    @RestController
-    public class sendGym{
-	    @RequestMapping(value = "/gym", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-        public OutdoorGym sendGym(){
-	        Location l =  new Location(1, 2);
-	        OutdoorGym gym = new OutdoorGym(l, "name", 12, "Test", "testar");
-	        return gym;
-        }
-    }
+//    //Den här är testad och skickar tillbaka objektets JSON-objekt
+//    @RestController
+//    public class sendGym{
+//	    @RequestMapping(value = "/gym", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+//        public OutdoorGym sendGym(){
+//	        Location l =  new Location(1, 2);
+//	        OutdoorGym gym = new OutdoorGym(l, "name", 12, "Test", "testar");
+//	        return gym;
+//        }
+//    }
     @RestController
     public class sayHello{
 	    @CrossOrigin
