@@ -38,6 +38,7 @@ public class FetchJSONFromAPI{
                 Location l = parseLocation(position);
                 String gymDescription = parseDescription(uniqueId);
                 parseGym(i, l, gymName, uniqueId, gymDescription);
+
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -148,5 +149,20 @@ public class FetchJSONFromAPI{
         return outdoorGymHashMap;
     }
 
+    /**
+     * method for loading out database with stockholm api database!
+     * DO NOT USE! WILL CREATE DUBBLE IN DATABASE AND THAT MUST BE FIXED FIRST!
+     * @param position cordinates
+     * @param gymName name
+     * @param gymDescription description
+     * @param uniqueId stockholm api ID
+     */
+
+    private void fillDatabase(Location position, String gymName, String gymDescription, String uniqueId){
+        DBManagement dbm = new DBManagement();
+        int longitude = position.getX();
+        int latitude = position.getY();
+        dbm.addOutdoorGym(gymName, gymDescription, longitude, latitude, uniqueId);
+    }
 
 }
