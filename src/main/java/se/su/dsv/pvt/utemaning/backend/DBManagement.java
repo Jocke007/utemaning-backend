@@ -370,7 +370,7 @@ public class DBManagement {
     public boolean addOutdoorGym(String name, String description, int longitude, int latitude, String apiKey) {
         String sqlQuery = ("INSERT INTO Workoutspot SET WorkoutSpotName = '" + name + "' , HasChallenge = false");
         int workoutSpotID = ctpdb.addAndReturnIncrementValue(sqlQuery);
-        sqlQuery = ("INSERT INTO OutdoorGym SET WorkoutSpotId = '" + workoutSpotID + "', outdoorGymDesc = '" + description + "'" +
+        sqlQuery = ("INSERT INTO OutdoorGym SET WorkoutSpotId = '" + workoutSpotID + "', outdoorGymDesc = '" + description + "' ," +
                 "StockholmStadAPIKey = '" + apiKey + "'");
         boolean successOnOutdoorgym = ctpdb.insertData(sqlQuery);
         if (!successOnOutdoorgym) {
