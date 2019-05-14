@@ -24,13 +24,14 @@ import java.util.Collection;
  * getParticipations
  * participationBuilder
  * addNewUser
+ * userBuilder
  * addNewOutdoorGym
  * addNewChallenge
  * addNewParticipation
  * <p>
  * TO FIX
- * userBuilder
- * user creation
+ *
+ *
  * TO DO
  *
  * @author Michel
@@ -185,8 +186,8 @@ public class DBManagement {
         try {
             int workoutSpotId = crs.getInt("WorkoutSpotId");
             String gymName = crs.getString("WorkoutSpotName");
-            int longitude = crs.getInt("GLongitude");
-            int latitude = crs.getInt("GLatitude");
+            double longitude = crs.getInt("GLongitude");
+            double latitude = crs.getInt("GLatitude");
             boolean hasChallenge = crs.getBoolean("HasChallenge");
             String gymDesctiption = crs.getString("outdoorGymDesc");
             String uniqueId = crs.getString("StockholmStadAPIKey");
