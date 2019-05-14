@@ -11,16 +11,16 @@ public class JUnitTest {
         Assert.assertEquals(123, newUser.getUserID());
     }
 
-    @Test
-    public void createOutdoorGymTest(){
-        Location newLocation = new Location(1000, 2000);
-        OutdoorGym testGym = new OutdoorGym(newLocation, "DSVs Utegym", 007, "007", "Här kan du träna allt");
-        Assert.assertFalse(testGym.getHasChallenge());
-        Assert.assertEquals("Här kan du träna allt", testGym.getDescription());
-
-        testGym.setDescription("Gymmet försvann");
-        Assert.assertEquals("Gymmet försvann", testGym.getDescription());
-    }
+//    @Test
+//    public void createOutdoorGymTest(){
+//        Location newLocation = new Location(1000, 2000);
+//        OutdoorGym testGym = new OutdoorGym(newLocation, "DSVs Utegym", 007, "007", "Här kan du träna allt");
+//        Assert.assertFalse(testGym.getHasChallenge());
+//        Assert.assertEquals("Här kan du träna allt", testGym.getDescription());
+//
+//        testGym.setDescription("Gymmet försvann");
+//        Assert.assertEquals("Gymmet försvann", testGym.getDescription());
+//    }
 // Tillfälligt utkommenterad då jag inte vet ifall den kommer förstöra databasen
 //
 //    @Test
