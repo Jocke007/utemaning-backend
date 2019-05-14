@@ -306,8 +306,8 @@ public class DBManagement {
         try {
             String userName = crs.getString("UserName");
             int challengeID = crs.getInt("ChallengeID");
-           // userBuilder()
-           // participation = new Participation(user, challengeID);
+            User user = getOneUser(userName);
+            participation = new Participation(user, challengeID);
         } catch (SQLException e) {
             e.printStackTrace();
             errorMessage = e.getMessage();
@@ -436,4 +436,7 @@ public class DBManagement {
     public String getErrorMessage() {
         return errorMessage;
     }
+
+
+
 }
