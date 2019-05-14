@@ -370,7 +370,7 @@ public class DBManagement {
      * @return returns a boolean true if all went fine, will return false if not.
      */
 
-    public boolean addOutdoorGym(String name, String description, int longitude, int latitude, String apiKey) {
+    public boolean addOutdoorGym(String name, String description, double longitude, double latitude, String apiKey) {
         String sqlQuery = ("INSERT INTO Workoutspot SET WorkoutSpotName = '" + name + "' , HasChallenge = false");
         int workoutSpotID = ctpdb.addAndReturnIncrementValue(sqlQuery);
         sqlQuery = ("INSERT INTO OutdoorGym SET WorkoutSpotId = '"

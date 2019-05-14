@@ -117,8 +117,11 @@ public class FetchJSONFromAPI{
      * @return Location location
      */
     public Location parseLocation(JsonObject position){
-        int x = position.get("X").getAsInt();
-        int y = position.get("Y").getAsInt();
+        int x1 = position.get("X").getAsInt();
+        int y1 = position.get("Y").getAsInt();
+
+        double x = x1;
+        double y = y1;
         Location location = new Location(x,y);
         return location;
     }
@@ -160,8 +163,8 @@ public class FetchJSONFromAPI{
 
     private void fillDatabase(Location position, String gymName, String gymDescription, String uniqueId){
         DBManagement dbm = new DBManagement();
-        int longitude = position.getX();
-        int latitude = position.getY();
+        double longitude = position.getX();
+        double latitude = position.getY();
         dbm.addOutdoorGym(gymName, gymDescription, longitude, latitude, uniqueId);
     }
 
