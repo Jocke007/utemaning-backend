@@ -100,7 +100,6 @@ public class DBManagement {
     private OutdoorGym getAllChallengeAtSpot(OutdoorGym outdoorGym) {
         int workoutspotID = outdoorGym.getId();
         String sqlQuery = ("SELECT * FROM `Challenge` WHERE WorkoutSpotId = '" + workoutspotID + "' ");
-        Collection<Challenge> challengeCollection = new ArrayList<>();
 
         try {
             CachedRowSet crsChallenge = ctpdb.getData(sqlQuery);

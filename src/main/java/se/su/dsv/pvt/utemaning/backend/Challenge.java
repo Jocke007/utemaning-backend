@@ -2,16 +2,13 @@ package se.su.dsv.pvt.utemaning.backend;
 import java.util.*;
 
 /**
- * The Challenge that a user can create
+ *  fixed this class with proper getters and a few setters, not challengeID or workoutspotID
+ *
  */
 public class Challenge {
-    private String name;
+    private String name, description;
     private int numberOfParticipants, challengeID, workoutSpotID;
-    //private String level; //TODO bestämma ifall det här ska vara en String eller kanske en egen klass? //Modified by michel
-    //private String workoutType; //Modified by michel
-    private Date eventTimeAndDate = new Date(); //Valde att enbart göra en instans av datum och inte en separat för tid eftersom att tid finns inbyggt i datum-klassen
-    private String description; //TODO fixa den här
-    //private ArrayList<User> participantList = new ArrayList<>(); //modified by Michel
+    private Date eventTimeAndDate;
 
     public Challenge(String name, int numberOfParticipants, Date eventTimeAndDate, String description,
                      int challengeID, int workoutspotID){
@@ -19,15 +16,44 @@ public class Challenge {
         this.numberOfParticipants = numberOfParticipants;
         this.challengeID = challengeID;
         this.workoutSpotID = workoutspotID;
-        //this.level = level; //modified by Michel
-        //this.workoutType = workoutType; //Modified by michel
         this.eventTimeAndDate = eventTimeAndDate;
         this.description = description;
+    }
+
+    public String getName(){
+        return name;
+    }
+    public void setName(String name){
+        this.name = name;
+    }
+    public String getDescription(){
+        return description;
+    }
+    public void setDescription(String desc){
+        description = desc;
+    }
+
+    public int getNumberOfParticipants() {
+        return numberOfParticipants;
+    }
+    public void setNumberOfParticipants(int i){
+        numberOfParticipants = i;
     }
 
     public int getChallengeID(){
         return challengeID;
     }
+    public int getWorkoutSpotID(){
+        return workoutSpotID;
+    }
+
+    public Date getEventTimeAndDate() {
+        return eventTimeAndDate;
+    }
+    public void setEventTimeAndDate(Date d){
+        eventTimeAndDate = d;
+    }
+
     @Override
     public String toString(){
         return "\nChallenge toString: "+
