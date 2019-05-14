@@ -4,11 +4,9 @@ package se.su.dsv.pvt.utemaning.backend;
 /**
  * Inherits from Place
  */
-public class OutdoorGym extends Place {
+public class OutdoorGym extends Place{
     public String getDescription() {
-        if (description != null)
-            return description;
-        else return "No description available";
+        return description;
     }
 
     public void setDescription(String description) {
@@ -17,8 +15,7 @@ public class OutdoorGym extends Place {
 
     private String description;
     private boolean hasChallenge;
-
-    public OutdoorGym(Location location, String name, int id, String uniqueId, String description) {
+    public OutdoorGym(Location location, String name, int id,String uniqueId, String description){
         super(location, name, id, uniqueId);
         this.description = description;
     }
@@ -29,9 +26,9 @@ public class OutdoorGym extends Place {
 
     // used for testing
     @Override
-    public String toString() {
-        return "\nOutdoorGym toString: " +
-                "\nName: " + name +
-                "\nLocation: " + location;
+    public String toString(){
+        return "\nOutdoorGym toString: "+
+                "\nName: "+ name +
+                "\nLocation: "+ location;
     }
 }
