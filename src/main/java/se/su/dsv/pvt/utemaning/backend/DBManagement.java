@@ -450,6 +450,12 @@ public class DBManagement {
         return errorMessage;
     }
 
+    /**
+     * method for removing a challenge from the database. will return true if all went well false is it did not.
+     * will also retrive error message if something went wrong.
+     * @param challengeId the ID number of the challenge to be deleted
+     * @return boolean true or false
+     */
     public boolean removeChallenge(int challengeId){
         String sqlQuery = ("DELETE FROM `Challenge` WHERE Challenge.ChallengeID = '"+challengeId+"' ");
             boolean success = ctpdb.insertData(sqlQuery);
@@ -458,6 +464,14 @@ public class DBManagement {
                 return false;
             }return success;
     }
+
+    /**
+     * method for removing a paticipation from the database, takes a challenge id and a username, returns true if deleted, false
+     * if not. will also retrive error message and store in errormessage
+     * @param challengeID the identifier of the challenge
+     * @param userName the identifier of the user
+     * @return boolean true or false
+     */
     public boolean removeParticipation (int challengeID, String userName){
         String sqlQuery = ("DELETE FROM  Participation WHERE Participation.ChallengeID = '"+challengeID+"' AND " +
                 "Participation.UserName = '"+userName+"' ");
