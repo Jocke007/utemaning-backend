@@ -186,8 +186,8 @@ public class DBManagement {
         try {
             int workoutSpotId = crs.getInt("WorkoutSpotId");
             String gymName = crs.getString("WorkoutSpotName");
-            double longitude = crs.getInt("GLongitude");
-            double latitude = crs.getInt("GLatitude");
+            double longitude = crs.getDouble("GLongitude");
+            double latitude = crs.getDouble("GLatitude");
             boolean hasChallenge = crs.getBoolean("HasChallenge");
             String gymDesctiption = crs.getString("outdoorGymDesc");
             String uniqueId = crs.getString("StockholmStadAPIKey");
@@ -232,7 +232,7 @@ public class DBManagement {
     public User getOneUser(String userNameInput) {
 
         User user = null;
-        String sqlQuery = ("SELECT " + userNameInput + " FROM User");
+        String sqlQuery = ("SELECT * FROM User WHERE UserName = ' " + userNameInput + " ' ");
         try {
             crs = ctpdb.getData(sqlQuery);
             while (crs.next()) {
@@ -281,9 +281,9 @@ public class DBManagement {
         String sqlQuery = null;
         Collection<Participation> participationCollection = new ArrayList<>();
         if (challengeID != 0) {
-            sqlQuery = ("SELECT * FROM participation WHERE ChallengeID = " + challengeID);
+            sqlQuery = ("SELECT * FROM participation WHERE ChallengeID = '" + challengeID+"' ");
         } else if (!userName.equals(null)) {
-            sqlQuery = ("SELECT * FROM participation WHERE UserName =" + userName);
+            sqlQuery = ("SELECT * FROM participation WHERE UserName = '" + userName+"' ");
         } else {
             sqlQuery = ("SELECT * FROM Participation");
         }
@@ -306,6 +306,8 @@ public class DBManagement {
         try {
             String userName = crs.getString("UserName");
             int challengeID = crs.getInt("ChallengeID");
+           // userBuilder()
+           // participation = new Participation(user, challengeID);
         } catch (SQLException e) {
             e.printStackTrace();
             errorMessage = e.getMessage();
