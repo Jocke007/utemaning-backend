@@ -16,18 +16,18 @@ public class BackendApplication {
 
         SpringApplication.run(BackendApplication.class, args);
 
-        /*
+/*
         DBManagement dbm = new DBManagement();
-        OutdoorGym outdoorGym = dbm.getOneOutdoorGym(60);
-        ArrayList<Challenge> challenges = outdoorGym.getChallengeList();
-        Challenge challenge = null;
-        for (Challenge num : challenges) {
-            int i = num.getChallengeID();
-            System.out.println(i);
+        boolean success = dbm.removeParticipation(6,"JohnTheFit");
+        if(success){
+            System.out.println("removed");
+        }else{
+            System.out.println(dbm.getErrorMessage());
         }
-    }
+        
+ */
 
-         */
+
     }
 
     //TEST FetchJSONFromAPI (Print all gyms)

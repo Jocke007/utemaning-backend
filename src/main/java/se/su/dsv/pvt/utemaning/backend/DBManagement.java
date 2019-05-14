@@ -9,6 +9,9 @@ import java.util.Collection;
 /**
  * this is a class to handle all database management. instead of having to know every class that does one thing to the database
  * we got 1 class that has metods that does those things. one object to use methods on instead of 20 different classes to handle.
+ *
+ * The SQL code written in this class is not very safe and is vulnerable to SQLinjection, we do however not have the time to make
+ * it safe.
  * <p>
  * Comments are above the code it refers to
  * <p>
@@ -447,6 +450,21 @@ public class DBManagement {
         return errorMessage;
     }
 
-
-
+    public boolean removeChallenge(int challengeId){
+        String sqlQuery = ("DELETE FROM `Challenge` WHERE Challenge.ChallengeID = '"+challengeId+"' ");
+            boolean success = ctpdb.insertData(sqlQuery);
+            if(!success){
+                errorMessage = ctpdb.getErrorMessage();
+                return false;
+            }return success;
+    }
+    public boolean removeParticipation (int challengeID, String userName){
+        String sqlQuery = ("DELETE FROM  Participation WHERE Participation.ChallengeID = '"+challengeID+"' AND " +
+                "Participation.UserName = '"+userName+"' ");
+        boolean success = ctpdb.insertData(sqlQuery);
+        if(!success){
+            errorMessage = ctpdb.getErrorMessage();
+            return false;
+        }return success;
+    }
 }
