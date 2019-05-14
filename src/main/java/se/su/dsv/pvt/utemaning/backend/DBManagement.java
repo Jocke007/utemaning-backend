@@ -89,35 +89,44 @@ public class DBManagement {
             return challenge;
         } else return null;
     }
-    public Collection getAllChallengeAtSpot(int workoutspotID) {
+
+    /**
+     * repurposed this method. it will not take an outdoorgym and get all challanges at that outdoorgym and add them to
+     * that outdoorgyms list and then return the outdoorgym.
+     *
+     * @param outdoorGym the object whos challanges to retrive
+     * @return the same object but with all challanges related to it
+     */
+    private OutdoorGym getAllChallengeAtSpot(OutdoorGym outdoorGym) {
+        int workoutspotID = outdoorGym.getId();
         String sqlQuery = ("SELECT * FROM `Challenge` WHERE WorkoutSpotId = '" + workoutspotID + "' ");
         Collection<Challenge> challengeCollection = new ArrayList<>();
 
         try {
-            crs = ctpdb.getData(sqlQuery);
-            while (crs.next()) {
-                Challenge challenge = challengeBuilder(crs);
-                challengeCollection.add(challenge);
+            CachedRowSet crsChallenge = ctpdb.getData(sqlQuery);
+            while (crsChallenge.next()) {
+                Challenge challenge = challengeBuilder(crsChallenge);
+                outdoorGym.challengeList.add(challenge);
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        }return challengeCollection;
+        }return outdoorGym;
     }
     /**
      * Support method for building challenge objects.
      *
-     * @param crs a row from the table.
+     * @param crsChallenge a row from the table.
      * @return challenge object
      */
-    private Challenge challengeBuilder(CachedRowSet crs) {
+    private Challenge challengeBuilder(CachedRowSet crsChallenge) {
         Challenge challenge = null;
         try {
-            String challengeName = crs.getString("ChallengeName");
-            String challengeDesc = crs.getString("Description");
-            int workoutSpotID = crs.getInt("WorkoutSpotID");
-            int challengeID = crs.getInt("ChallengeID");
-            int numberOfParticipants = crs.getInt("Participants");
-            java.util.Date date = new Date(crs.getDate("Date").getTime());
+            String challengeName = crsChallenge.getString("ChallengeName");
+            String challengeDesc = crsChallenge.getString("Description");
+            int workoutSpotID = crsChallenge.getInt("WorkoutSpotID");
+            int challengeID = crsChallenge.getInt("ChallengeID");
+            int numberOfParticipants = crsChallenge.getInt("Participants");
+            java.util.Date date = new Date(crsChallenge.getDate("Date").getTime());
             challenge = new Challenge(challengeName, numberOfParticipants, date, challengeDesc, challengeID, workoutSpotID);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -131,8 +140,8 @@ public class DBManagement {
      *
      * @return collection of outdoorgyms
      */
-    public Collection getAllOutdoorGyms() {
-        Collection<OutdoorGym> outdoorGymCollection = new ArrayList<>();
+    public ArrayList getAllOutdoorGyms() {
+        ArrayList<OutdoorGym> outdoorGymCollection = new ArrayList<>();
         String sqlQuery = ("SELECT * FROM OutdoorGym, Workoutspot, Location WHERE " +
                 "Workoutspot.WorkoutSpotId = OutdoorGym.WorkoutSpotId AND " +
                 "Workoutspot.WorkoutSpotId = Location.WorkoutSpotID");
@@ -193,6 +202,8 @@ public class DBManagement {
             String uniqueId = crs.getString("StockholmStadAPIKey");
             Location location = new Location(longitude, latitude);
             outdoorGym = new OutdoorGym(location, gymName, workoutSpotId, uniqueId, gymDesctiption);
+            outdoorGym = getAllChallengeAtSpot(outdoorGym);
+
         } catch (SQLException e) {
             e.printStackTrace();
         }

@@ -12,20 +12,30 @@ import java.util.Collection;
 @SpringBootApplication
 public class BackendApplication {
 
-	public static void main(String[] args) {
+    public static void main(String[] args) {
 
         SpringApplication.run(BackendApplication.class, args);
 
+        DBManagement dbm = new DBManagement();
+        OutdoorGym outdoorGym = dbm.getOneOutdoorGym(60);
+        ArrayList<Challenge> challenges = outdoorGym.getChallengeList();
+        Challenge challenge = null;
+        for (Challenge num : challenges) {
+            int i = num.getChallengeID();
+            System.out.println(i);
+        }
+    }
 
 
-        //TEST FetchJSONFromAPI (Print all gyms)
-        //new FetchJSONFromAPI().parseFromAllOutdoorGyms();
-	}
+    //TEST FetchJSONFromAPI (Print all gyms)
+    //new FetchJSONFromAPI().parseFromAllOutdoorGyms();
 
-	@RestController
-    public class getAllGyms{
+
+    @RestController
+    public class getAllGyms {
         @RequestMapping(value = "/allGyms", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-        public @ResponseBody Collection<OutdoorGym> getAllGyms(){
+        public @ResponseBody
+        Collection<OutdoorGym> getAllGyms() {
             DBManagement dbm = new DBManagement();
             Collection<OutdoorGym> allGyms;
             allGyms = dbm.getAllOutdoorGyms();
@@ -37,10 +47,11 @@ public class BackendApplication {
     //Den här får inget error men den verkar inte skicka tillbaka rätt informamtion. Vi borde testa att den
     //faktiskt hämtar korrekt data från databasen
     @RestController
-    public class HelloJSONRestController2{
+    public class HelloJSONRestController2 {
         @CrossOrigin
         @RequestMapping(value = "outdoorgymtest", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-        public @ResponseBody OutdoorGym response(@RequestParam("gymID") String gymID){
+        public @ResponseBody
+        OutdoorGym response(@RequestParam("gymID") String gymID) {
 
             int outdoorGymID = Integer.parseInt(gymID);
             DBManagement dbm = new DBManagement();
@@ -49,7 +60,7 @@ public class BackendApplication {
         }
     }
 
-//    //Den här är testad och skickar tillbaka objektets JSON-objekt
+    //    //Den här är testad och skickar tillbaka objektets JSON-objekt
 //    @RestController
 //    public class sendGym{
 //	    @RequestMapping(value = "/gym", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -60,10 +71,10 @@ public class BackendApplication {
 //        }
 //    }
     @RestController
-    public class sayHello{
-	    @CrossOrigin
+    public class sayHello {
+        @CrossOrigin
         @RequestMapping(value = "/sayHello", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-        public String sayHello(){
+        public String sayHello() {
             return "Hello world";
         }
     }

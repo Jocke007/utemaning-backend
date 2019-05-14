@@ -14,7 +14,7 @@ public class Challenge {
     //private ArrayList<User> participantList = new ArrayList<>(); //modified by Michel
 
     public Challenge(String name, int numberOfParticipants, Date eventTimeAndDate, String description,
-                     int ChallengeID, int workoutspotID){
+                     int challengeID, int workoutspotID){
         this.name = name;
         this.numberOfParticipants = numberOfParticipants;
         this.challengeID = challengeID;
@@ -25,7 +25,9 @@ public class Challenge {
         this.description = description;
     }
 
-    // used for testing
+    public int getChallengeID(){
+        return challengeID;
+    }
     @Override
     public String toString(){
         return "\nChallenge toString: "+
