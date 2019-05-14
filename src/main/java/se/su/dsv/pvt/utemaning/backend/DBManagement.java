@@ -88,7 +88,7 @@ public class DBManagement {
             return challenge;
         } else return null;
     }
-    public Collection getOneChallengeAtSpot(int workoutspotID) {
+    public Collection getAllChallengeAtSpot(int workoutspotID) {
         String sqlQuery = ("SELECT * FROM `Challenge` WHERE WorkoutSpotId = '" + workoutspotID + "' ");
         Collection<Challenge> challengeCollection = new ArrayList<>();
 
@@ -182,16 +182,16 @@ public class DBManagement {
      */
     private OutdoorGym buildOfOutdoorGym() {
         OutdoorGym outdoorGym = null;
-        String uniqueIdTemp = "123-123123-asdasd (placeholder)";
         try {
             int workoutSpotId = crs.getInt("WorkoutSpotId");
             String gymName = crs.getString("WorkoutSpotName");
-            int longitude = crs.getInt("Longitude");
-            int latitude = crs.getInt("Latitude");
+            int longitude = crs.getInt("GLongitude");
+            int latitude = crs.getInt("GLatitude");
             boolean hasChallenge = crs.getBoolean("HasChallenge");
             String gymDesctiption = crs.getString("outdoorGymDesc");
+            String uniqueId = crs.getString("StockholmStadAPIKey");
             Location location = new Location(longitude, latitude);
-            outdoorGym = new OutdoorGym(location, gymName, workoutSpotId, uniqueIdTemp, gymDesctiption);
+            outdoorGym = new OutdoorGym(location, gymName, workoutSpotId, uniqueId, gymDesctiption);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -370,7 +370,8 @@ public class DBManagement {
     public boolean addOutdoorGym(String name, String description, int longitude, int latitude, String apiKey) {
         String sqlQuery = ("INSERT INTO Workoutspot SET WorkoutSpotName = '" + name + "' , HasChallenge = false");
         int workoutSpotID = ctpdb.addAndReturnIncrementValue(sqlQuery);
-        sqlQuery = ("INSERT INTO OutdoorGym SET WorkoutSpotId = '" + workoutSpotID + "', outdoorGymDesc = '" + description + "' ," +
+        sqlQuery = ("INSERT INTO OutdoorGym SET WorkoutSpotId = '"
+                + workoutSpotID + "', outdoorGymDesc = '" + description + "' ," +
                 "StockholmStadAPIKey = '" + apiKey + "'");
         boolean successOnOutdoorgym = ctpdb.insertData(sqlQuery);
         if (!successOnOutdoorgym) {
