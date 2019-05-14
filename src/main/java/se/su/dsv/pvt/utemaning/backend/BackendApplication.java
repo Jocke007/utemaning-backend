@@ -16,6 +16,7 @@ public class BackendApplication {
 
         SpringApplication.run(BackendApplication.class, args);
 
+        /*
         DBManagement dbm = new DBManagement();
         OutdoorGym outdoorGym = dbm.getOneOutdoorGym(60);
         ArrayList<Challenge> challenges = outdoorGym.getChallengeList();
@@ -26,6 +27,8 @@ public class BackendApplication {
         }
     }
 
+         */
+    }
 
     //TEST FetchJSONFromAPI (Print all gyms)
     //new FetchJSONFromAPI().parseFromAllOutdoorGyms();
