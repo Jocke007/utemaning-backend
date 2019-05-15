@@ -6,8 +6,6 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
 
 
 @SpringBootApplication
@@ -76,6 +74,14 @@ public class BackendApplication {
             return allGyms;
         }
     }
+    //Behövs det ResponseEntity<Challenge> här?
+    @RequestMapping(value = "createChallenge", method = RequestMethod.POST)
+    public void createNewChallenge(@RequestBody Challenge c){
+        DBManagement dbm = new DBManagement();
+        OutdoorGym gym = dbm.getOneOutdoorGym(c.getWorkoutSpotID());
+        gym.addChallange(c);
+        dbm.addChallenge(c.getDescription(), c.getName(), c.getEventTimeAndDate(), c.getWorkoutSpotID());
+    }
 
 
     //Den här får inget error men den verkar inte skicka tillbaka rätt informamtion. Vi borde testa att den
@@ -94,16 +100,6 @@ public class BackendApplication {
         }
     }
 
-    //    //Den här är testad och skickar tillbaka objektets JSON-objekt
-//    @RestController
-//    public class sendGym{
-//	    @RequestMapping(value = "/gym", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-//        public OutdoorGym sendGym(){
-//	        Location l =  new Location(1, 2);
-//	        OutdoorGym gym = new OutdoorGym(l, "name", 12, "Test", "testar");
-//	        return gym;
-//        }
-//    }
     @RestController
     public class sayHello {
         @CrossOrigin
