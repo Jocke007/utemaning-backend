@@ -18,13 +18,15 @@ public class BackendApplication {
         SpringApplication.run(BackendApplication.class, args);
 
 
-
+/*
         DBManagement dbm = new DBManagement();
         Date date = new Date();
         boolean success = dbm.addChallenge("testing if boolean will flip","fitnessULTIMATE!",date, 61);
         if (success){
             System.out.println("yey");
         }
+
+ */
 /*
         ArrayList<User> list = dbm.getAllUsers();
         for(User challenge:list ){
