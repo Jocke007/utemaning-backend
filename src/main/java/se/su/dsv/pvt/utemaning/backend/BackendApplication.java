@@ -21,7 +21,7 @@ public class BackendApplication {
 
         DBManagement dbm = new DBManagement();
         Date date = new Date();
-        boolean success = dbm.addChallenge("testing if boolean will flip","fitnessULTIMATE!",date, 56);
+        boolean success = dbm.addChallenge("testing if boolean will flip","fitnessULTIMATE!",date, 61);
         if (success){
             System.out.println("yey");
         }
@@ -67,7 +67,7 @@ public class BackendApplication {
     public class getAllGyms {
         @RequestMapping(value = "/allGyms", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
         public @ResponseBody
-        Collection<OutdoorGym> getAllGyms() {
+        ArrayList<OutdoorGym> getAllGyms() {
             DBManagement dbm = new DBManagement();
             ArrayList<OutdoorGym> allGyms;
             allGyms = dbm.getAllOutdoorGyms();
