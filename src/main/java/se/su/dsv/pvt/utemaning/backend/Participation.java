@@ -13,6 +13,7 @@ public class Participation {
         return challengeID;
     }
     public String getUserName(){
-        return user.getUserName();
+        String userName = user.getUserName();
+        return userName;
     }
 }

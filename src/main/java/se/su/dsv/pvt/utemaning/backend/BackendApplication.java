@@ -16,16 +16,29 @@ public class BackendApplication {
 
         SpringApplication.run(BackendApplication.class, args);
 
-/*
+
+
         DBManagement dbm = new DBManagement();
-        boolean success = dbm.removeParticipation(6,"JohnTheFit");
-        if(success){
-            System.out.println("removed");
-        }else{
-            System.out.println(dbm.getErrorMessage());
+        /*
+        User user = dbm.getOneUser("nils");
+        System.out.println(user.getUserName());
+
+         */
+/*
+        ArrayList<Participation> list = dbm.getParticipations("nils",6);
+
+        if(list.isEmpty()) {
+            System.out.println("tom");
+        }
+         for (Participation participation: list ){
+            String userName =  participation.getUserName();
+            System.out.println(userName);
         }
 
  */
+
+
+
 
 
     }

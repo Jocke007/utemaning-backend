@@ -43,7 +43,6 @@ import java.util.Collection;
 
 public class DBManagement {
     private String errorMessage;
-    private CachedRowSet crs;
     private ConnectionToPasiDB ctpdb = new ConnectionToPasiDB();
 
 
@@ -58,7 +57,7 @@ public class DBManagement {
         String sqlQuery = ("SELECT * FROM `Challenge`");
         Collection<Challenge> challengeCollection = new ArrayList<>();
         try {
-            crs = ctpdb.getData(sqlQuery);
+            CachedRowSet crs = ctpdb.getData(sqlQuery);
             while (crs.next()) {
                 Challenge challenge = challengeBuilder(crs);
                 challengeCollection.add(challenge);
@@ -81,7 +80,7 @@ public class DBManagement {
         String sqlQuery = ("SELECT * FROM `Challenge` WHERE ChallengeID = '"+challengeIDInput+"' ");
         Challenge challenge = null;
         try {
-            crs = ctpdb.getData(sqlQuery);
+            CachedRowSet crs = ctpdb.getData(sqlQuery);
             while (crs.next()) {
                 challenge = challengeBuilder(crs);
             }
@@ -105,9 +104,9 @@ public class DBManagement {
         String sqlQuery = ("SELECT * FROM `Challenge` WHERE WorkoutSpotId = '" + workoutspotID + "' ");
 
         try {
-            CachedRowSet crsChallenge = ctpdb.getData(sqlQuery);
-            while (crsChallenge.next()) {
-                Challenge challenge = challengeBuilder(crsChallenge);
+            CachedRowSet crs = ctpdb.getData(sqlQuery);
+            while (crs.next()) {
+                Challenge challenge = challengeBuilder(crs);
                 outdoorGym.challengeList.add(challenge);
             }
         } catch (SQLException e) {
@@ -117,18 +116,19 @@ public class DBManagement {
     /**
      * Support method for building challenge objects.
      *
-     * @param crsChallenge a row from the table.
+     * @param crs a row from the table.
      * @return challenge object
      */
-    private Challenge challengeBuilder(CachedRowSet crsChallenge) {
+    private Challenge challengeBuilder(CachedRowSet crs) {
         Challenge challenge = null;
         try {
-            String challengeName = crsChallenge.getString("ChallengeName");
-            String challengeDesc = crsChallenge.getString("Description");
-            int workoutSpotID = crsChallenge.getInt("WorkoutSpotID");
-            int challengeID = crsChallenge.getInt("ChallengeID");
-            int numberOfParticipants = crsChallenge.getInt("Participants");
-            java.util.Date date = new Date(crsChallenge.getDate("Date").getTime());
+            String challengeName = crs.getString("ChallengeName");
+            String challengeDesc = crs.getString("Description");
+            int workoutSpotID = crs.getInt("WorkoutSpotID");
+            int challengeID = crs.getInt("ChallengeID");
+            int numberOfParticipants = crs.getInt("Participants");
+            java.util.Date date = new Date(crs.getDate("Date").getTime());
+            boolean expired = crs.getBoolean("Expired");
             challenge = new Challenge(challengeName, numberOfParticipants, date, challengeDesc, challengeID, workoutSpotID);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -148,9 +148,9 @@ public class DBManagement {
                 "Workoutspot.WorkoutSpotId = OutdoorGym.WorkoutSpotId AND " +
                 "Workoutspot.WorkoutSpotId = Location.WorkoutSpotID");
         try {
-            crs = ctpdb.getData(sqlQuery);
+            CachedRowSet crs = ctpdb.getData(sqlQuery);
             while (crs.next()) {
-                OutdoorGym outdoorGym = buildOfOutdoorGym();
+                OutdoorGym outdoorGym = buildOfOutdoorGym(crs);
                 outdoorGymCollection.add(outdoorGym);
             }
         } catch (SQLException e) {
@@ -173,9 +173,9 @@ public class DBManagement {
                 "OutdoorGym.WorkoutSpotId = ' "+workoutSpotIdInput+" ' ");
         OutdoorGym outdoorGym = null;
         try {
-            crs = ctpdb.getData(sqlQuery);
+            CachedRowSet crs = ctpdb.getData(sqlQuery);
             while (crs.next()) {
-                outdoorGym = buildOfOutdoorGym();
+                outdoorGym = buildOfOutdoorGym(crs);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -192,7 +192,7 @@ public class DBManagement {
      * private method to create outdoorgyms in an attempt to redude code
      * @return outdoorgym
      */
-    private OutdoorGym buildOfOutdoorGym() {
+    private OutdoorGym buildOfOutdoorGym(CachedRowSet crs) {
         OutdoorGym outdoorGym = null;
         try {
             int workoutSpotId = crs.getInt("WorkoutSpotId");
@@ -203,6 +203,7 @@ public class DBManagement {
             String gymDesctiption = crs.getString("outdoorGymDesc");
             String uniqueId = crs.getString("StockholmStadAPIKey");
             Location location = new Location(longitude, latitude);
+            double rank = crs.getDouble("Rank");
             outdoorGym = new OutdoorGym(location, gymName, workoutSpotId, uniqueId, gymDesctiption);
             outdoorGym = getAllChallengeAtSpot(outdoorGym);
 
@@ -224,7 +225,7 @@ public class DBManagement {
         Collection<User> userCollection = new ArrayList<>();
         userCollection.clear();
         try {
-            crs = ctpdb.getData(sqlQuery);
+            CachedRowSet crs = ctpdb.getData(sqlQuery);
             while (crs.next()) {
                 User user = userBuilder(crs);
                 userCollection.add(user);
@@ -243,11 +244,10 @@ public class DBManagement {
      * @return returns that user
      */
     public User getOneUser(String userNameInput) {
-
         User user = null;
-        String sqlQuery = ("SELECT * FROM User WHERE UserName = ' " + userNameInput + " ' ");
+        String sqlQuery = ("SELECT * FROM User WHERE `UserName` = '"+userNameInput+"' ");
+        CachedRowSet crs = ctpdb.getData(sqlQuery);
         try {
-            crs = ctpdb.getData(sqlQuery);
             while (crs.next()) {
                 user = userBuilder(crs);
             }
@@ -272,7 +272,7 @@ public class DBManagement {
             String userName = crs.getString("UserName");
             String firstName = crs.getString("FirstName");
             String lastName = crs.getString("LastName");
-            String email = crs.getString("E-Mail");
+            String email = crs.getString("EMail");
             user = new User(userName, userId, firstName, lastName, email);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -289,18 +289,18 @@ public class DBManagement {
      * @param challengeID ID of the challenge
      * @return a list of the participations
      */
-    public Collection getParticipations(String userName, int challengeID) {
+    public ArrayList getParticipations(String userName, int challengeID) {
         Participation participation = null;
         String sqlQuery = null;
-        Collection<Participation> participationCollection = new ArrayList<>();
-        if (challengeID != 0) {
-            sqlQuery = ("SELECT * FROM participation WHERE ChallengeID = '" + challengeID+"' ");
-        } else if (!userName.equals(null)) {
-            sqlQuery = ("SELECT * FROM participation WHERE UserName = '" + userName+"' ");
-        } else {
-            sqlQuery = ("SELECT * FROM Participation");
+        ArrayList<Participation> participationCollection = new ArrayList<>();
+        if (challengeID != 0 && userName.equals(null)) {
+            sqlQuery = ("SELECT * FROM Participation WHERE ChallengeID = '" + challengeID+"' ");
+        } else if (challengeID == 0 && !userName.equals(null)) {
+            sqlQuery = ("SELECT * FROM Participation WHERE UserName = '" + userName+"' ");
+        }else{
+            sqlQuery = ("SELECT * FROM Participation WHERE UserName = '"+userName+"' AND ChallengeID = '"+challengeID+"' ");
         }
-        crs = ctpdb.getData(sqlQuery);
+        CachedRowSet crs = ctpdb.getData(sqlQuery);
         try {
             while (crs.next()) {
                 participation = participationBuilder(crs);
@@ -319,6 +319,7 @@ public class DBManagement {
         try {
             String userName = crs.getString("UserName");
             int challengeID = crs.getInt("ChallengeID");
+            boolean completed = crs.getBoolean("Completed");
             User user = getOneUser(userName);
             participation = new Participation(user, challengeID);
         } catch (SQLException e) {
@@ -326,30 +327,6 @@ public class DBManagement {
             errorMessage = e.getMessage();
         }
         return participation;
-    }
-
-    /**
-     * this is a mthod used for the spring demo. can be used again if another demo is needed.
-     */
-    public String sprintDemo() {
-        String sqlQuery = ("SELECT * FROM Challenge WHERE ChallengeID = 1");
-        String message = null;
-        try {
-            crs = ctpdb.getData(sqlQuery);
-            while (crs.next()) {
-                String challengeName = crs.getString("ChallengeName");
-                String challengeDesc = crs.getString("Description");
-                int atLocationId = crs.getInt("WorkoutSpotID");
-                int challengeID = crs.getInt("ChallengeID");
-                int participants = crs.getInt("Participants");
-                Date date = crs.getDate("Date");
-                message = (challengeName + "\n" + challengeDesc);
-
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return message;
     }
 
     /**
@@ -407,16 +384,16 @@ public class DBManagement {
     /**
      * @param desc          decription of challenge
      * @param name          name of challenge
-     * @param time          time of challange
      * @param date          date of challege
      * @param workoutSpotID at what location is the challenge
      * @return boolean true of false if successfly stored in database
      */
 
-    public boolean addChallenge(String desc, String name, Time time, Date date, int workoutSpotID) {
+    public boolean addChallenge(String desc, String name, java.util.Date date, int workoutSpotID) {
+        boolean expired = false;
         String sqlQuery = ("INSERT INTO Challenge SET WorkoutSpotid = '" + workoutSpotID
-                + "' , ChallengeName = '" + name + "' , Time = '" + time + "' , Date = '" + date +
-                "' , Description = '" + desc + "' , Participants = '0'");
+                + "' , ChallengeName = '" + name + "' , Date = '" + date +
+                "' , Description = '" + desc + "' , Participants = '0' , Expired = '"+expired+"' ");
         boolean success = ctpdb.insertData(sqlQuery);
         if (!success) {
             errorMessage = ctpdb.getErrorMessage();
@@ -432,7 +409,9 @@ public class DBManagement {
      * @return will return true if all went well, otherwise get the error message and store it and return false
      */
     public boolean addParticipation(int challengeID, String userName) {
-        String sqlQuery = ("INSERT INTO Participation SET ChallengeID ='" + challengeID + "' , UserName = '" + userName + "'");
+        boolean completed = false;
+        String sqlQuery = ("INSERT INTO Participation SET ChallengeID ='" + challengeID + "' , UserName = '" + userName + "'" +
+                " , Completed = '"+completed+"' ");
         boolean success = ctpdb.insertData(sqlQuery);
         if (!success) {
             errorMessage = ctpdb.getErrorMessage();
