@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 
 
 @SpringBootApplication
@@ -19,23 +20,37 @@ public class BackendApplication {
 
 
         DBManagement dbm = new DBManagement();
-        /*
-        User user = dbm.getOneUser("nils");
-        System.out.println(user.getUserName());
-
-         */
+        boolean success = dbm.completeChallenge("nils",6);
+        if (success){
+            System.out.println("yey");
+        }
 /*
-        ArrayList<Participation> list = dbm.getParticipations("nils",6);
+        ArrayList<User> list = dbm.getAllUsers();
+        for(User challenge:list ){
+            System.out.println(challenge.getUserName());
+        }
+        User user = dbm.getOneUser("nils");
+        System.out.println(user.getUserID());
+
+ */
+
+
+
+
+/*
+        ArrayList<Challenge> list = dbm.getAllChallenge();
 
         if(list.isEmpty()) {
             System.out.println("tom");
         }
-         for (Participation participation: list ){
-            String userName =  participation.getUserName();
-            System.out.println(userName);
+         for (Challenge participation: list ){
+
+            System.out.println(participation.getDescription());
         }
 
+
  */
+
 
 
 
@@ -53,7 +68,7 @@ public class BackendApplication {
         public @ResponseBody
         Collection<OutdoorGym> getAllGyms() {
             DBManagement dbm = new DBManagement();
-            Collection<OutdoorGym> allGyms;
+            ArrayList<OutdoorGym> allGyms;
             allGyms = dbm.getAllOutdoorGyms();
             return allGyms;
         }

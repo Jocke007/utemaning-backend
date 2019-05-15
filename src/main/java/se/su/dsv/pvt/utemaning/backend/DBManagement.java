@@ -16,26 +16,33 @@ import java.util.Collection;
  * Comments are above the code it refers to
  * <p>
  * METHODS SO FAR
- * getAllChallenge
- * getOneChallenge
- * challengeBuilder
- * getAllOutdoorGyms
- * getOneOutdoorGym
- * outdoorGymBuilder
- * getAllUsers
- * getOneUser
- * getParticipations
- * participationBuilder
- * addNewUser
- * userBuilder
- * addNewOutdoorGym
- * addNewChallenge
- * addNewParticipation
+ * getAllChallenge              TESTED
+ * getSpecificChallenge         TESTED
+ * getAllChallengeAtSpot        TESTED
+ * challengeBuilder             TESTED
+ * getAllOutdoorGyms            TESTED
+ * getOneOutdoorGym             TESTED
+ * outdoorGymBuilder            TESTED
+ * getAllUsers                  TESTED
+ * getOneUser                   TESTED
+ * userBuilder                  TESTED
+ * getParticipations            TESTED
+ * participationBuilder         TESTED
+ * addNewUser                   TESTED
+ * addNewOutdoorGym             TESTED
+ * addNewChallenge              TESTED
+ * addNewParticipation          TESTED
+ * removeChallenge              TESTED
+ * removeParticipation          TESTED
+ * completeChallenge            TESTED
  * <p>
  * TO FIX
  *
  *
  * TO DO
+ * rank outdoorgym
+ * alter outdoorgym table
+ * alter workspot table
  *
  * @author Michel
  */
@@ -47,15 +54,18 @@ public class DBManagement {
 
 
     /**
-     * a method to retrive all challenges from the database and return those challenges in the form of a collection
-     * will return empthy collection if no challenges exsists
+     * a method to retrive all challenges from the database and return those challenges in the form of an ArrayList
+     * will return an empthy Arraylist if no challenges exsists
+     * will use challengeBuilder method to build the objects
      *
-     * @return a collection in the form of an arraylist
+     * @return an arraylist
+     *
+     * TESTED 15/5 AND WORKS AS INTENDED.
      */
-    public Collection getAllChallenge() {
+    public ArrayList getAllChallenge() {
 
         String sqlQuery = ("SELECT * FROM `Challenge`");
-        Collection<Challenge> challengeCollection = new ArrayList<>();
+        ArrayList<Challenge> challengeCollection = new ArrayList<>();
         try {
             CachedRowSet crs = ctpdb.getData(sqlQuery);
             while (crs.next()) {
@@ -69,12 +79,14 @@ public class DBManagement {
     }
 
     /**
-     * a method to collect a single challenge from the database based on the challenge id nummer, creates that challenge and
-     * returns it
+     * a method to collect a single challenge from the database based on the challenge id number.
      * will return null if challenge does not exsists
+     * will use challengeBuilder method to create the challenge
      *
      * @param challengeIDInput the ID of the challenge to be retrived.
      * @return returns a challenge object if found in database otherwise an empty object
+     *
+     * TESTED 15/5 AND WORKS AS INTENDED
      */
     public Challenge getSpecificChallenge(int challengeIDInput) {
         String sqlQuery = ("SELECT * FROM `Challenge` WHERE ChallengeID = '"+challengeIDInput+"' ");
@@ -98,6 +110,8 @@ public class DBManagement {
      *
      * @param outdoorGym the object whos challanges to retrive
      * @return the same object but with all challanges related to it
+     *
+     * TESTED 15/5 AND WORKS AS INTENDED
      */
     private OutdoorGym getAllChallengeAtSpot(OutdoorGym outdoorGym) {
         int workoutspotID = outdoorGym.getId();
@@ -118,6 +132,8 @@ public class DBManagement {
      *
      * @param crs a row from the table.
      * @return challenge object
+     *
+     * TESTED 15/5 AND WORKS AS INTENDED
      */
     private Challenge challengeBuilder(CachedRowSet crs) {
         Challenge challenge = null;
@@ -137,10 +153,12 @@ public class DBManagement {
     }
 
     /**
-     * a method to collect all outdoorGyms from the database and returns those objects as a collection
+     * a method to collect all outdoorGyms from the database and returns those objects as an ArrayList
      * will return empthy list if no outdoorgyms exsists
      *
-     * @return collection of outdoorgyms
+     * @return arraylist of outdoorgyms
+     *
+     * TESTED 15/5 AND WORKS AS INTENDED
      */
     public ArrayList getAllOutdoorGyms() {
         ArrayList<OutdoorGym> outdoorGymCollection = new ArrayList<>();
@@ -165,6 +183,8 @@ public class DBManagement {
      *
      * @param workoutSpotIdInput the primarykey of the workoutSpot to be found
      * @return returns the outdoorgym object
+     *
+     * TESTED 15/5 AND WORKS AS INTENDED
      */
     public OutdoorGym getOneOutdoorGym(int workoutSpotIdInput) {
         String sqlQuery = ("SELECT * FROM OutdoorGym, Workoutspot, Location " +
@@ -191,6 +211,8 @@ public class DBManagement {
     /**
      * private method to create outdoorgyms in an attempt to redude code
      * @return outdoorgym
+     *
+     * TESTED 15/5 AND WOKRS AS INTENDED
      */
     private OutdoorGym buildOfOutdoorGym(CachedRowSet crs) {
         OutdoorGym outdoorGym = null;
@@ -214,15 +236,17 @@ public class DBManagement {
     }
 
     /**
-     * method to get all users from database and create user objects, and returns those objects in a colletion
-     * will return empthy collection if no users in database
+     * method to get all users from database and create user objects, and returns those objects in an arraylist
+     * will return empthy arraylist if no users in database
      *
-     * @return returns a collection of all users.
+     * @return returns an Arraylist of all users.
+     *
+     * TESTED 15/5 AND WORKS AS INTENDED
      */
-    public Collection getAllUsers() {
+    public ArrayList getAllUsers() {
 
         String sqlQuery = ("SELECT * FROM `User`");
-        Collection<User> userCollection = new ArrayList<>();
+        ArrayList<User> userCollection = new ArrayList<>();
         userCollection.clear();
         try {
             CachedRowSet crs = ctpdb.getData(sqlQuery);
@@ -242,6 +266,8 @@ public class DBManagement {
      *
      * @param userNameInput name of the user to find
      * @return returns that user
+     *
+     * TESTED 15/5 AND WOKRS AS INTENDED
      */
     public User getOneUser(String userNameInput) {
         User user = null;
@@ -264,6 +290,8 @@ public class DBManagement {
      *
      * @param crs 1 row from the table
      * @return a user object
+     *
+     * TESTED 15/5 AND WOKRS AS INTENDED
      */
     public User userBuilder(CachedRowSet crs) {
         User user = null;
@@ -288,6 +316,8 @@ public class DBManagement {
      * @param userName    name of user
      * @param challengeID ID of the challenge
      * @return a list of the participations
+     *
+     * TESTED 15/5 AND WOKRS AS INTENDED
      */
     public ArrayList getParticipations(String userName, int challengeID) {
         Participation participation = null;
@@ -313,7 +343,13 @@ public class DBManagement {
         return participationCollection;
     }
 
-
+    /**
+     * method for building participation objects, will support the other methods that need it
+     * @param crs a table with the information needed
+     * @return a participation object
+     *
+     * TESTED 15/5 AND WOKRS AS INTENDED
+     */
     private Participation participationBuilder(CachedRowSet crs) {
         Participation participation = null;
         try {
@@ -338,6 +374,8 @@ public class DBManagement {
      * @param lastName  lastname of the user
      * @param Email     email adress of the user
      * @return boolean true or false depending on result
+     *
+     * TESTED 15/5 AND WOKRS AS INTENDED
      */
     public boolean addUser(String userName, String firstName, String lastName, String Email) {
         String sqlQuery = ("INSERT INTO User SET UserName = '" + userName + "', FirstName = '"
@@ -358,6 +396,8 @@ public class DBManagement {
      * @param longitude   the longitude of the outdoorGym, taken from stockholm API
      * @param latitude    the latitude of the outdoorGym, taken from stockholm API
      * @return returns a boolean true if all went fine, will return false if not.
+     *
+     * tested 15/5 and works as intended
      */
 
     public boolean addOutdoorGym(String name, String description, double longitude, double latitude, String apiKey) {
@@ -387,6 +427,8 @@ public class DBManagement {
      * @param date          date of challege
      * @param workoutSpotID at what location is the challenge
      * @return boolean true of false if successfly stored in database
+     *
+     * tested 15/5 and works as intended
      */
 
     public boolean addChallenge(String desc, String name, java.util.Date date, int workoutSpotID) {
@@ -407,6 +449,8 @@ public class DBManagement {
      * @param challengeID the primarykey of the challenge, and the identifier of the challenge
      * @param userName    a unique identifier for a user
      * @return will return true if all went well, otherwise get the error message and store it and return false
+     *
+     *tested 15/5 and works
      */
     public boolean addParticipation(int challengeID, String userName) {
         boolean completed = false;
@@ -434,6 +478,8 @@ public class DBManagement {
      * will also retrive error message if something went wrong.
      * @param challengeId the ID number of the challenge to be deleted
      * @return boolean true or false
+     *
+     * tested 15/5 and works
      */
     public boolean removeChallenge(int challengeId){
         String sqlQuery = ("DELETE FROM `Challenge` WHERE Challenge.ChallengeID = '"+challengeId+"' ");
@@ -450,6 +496,7 @@ public class DBManagement {
      * @param challengeID the identifier of the challenge
      * @param userName the identifier of the user
      * @return boolean true or false
+     * tested 15/5 and works
      */
     public boolean removeParticipation (int challengeID, String userName){
         String sqlQuery = ("DELETE FROM  Participation WHERE Participation.ChallengeID = '"+challengeID+"' AND " +
@@ -460,4 +507,23 @@ public class DBManagement {
             return false;
         }return success;
     }
+
+    /**
+     * method for completing a challenge, it will alter the participation table and flip the boolean completed to 1.
+     * @param userName the user
+     * @param challengeID the challenge
+     * @return returns true if ok false if not ok
+     *
+     * tested 15/5 and works
+     */
+    public boolean completeChallenge(String userName, int challengeID){
+        String sqlQuery = ("UPDATE Participation SET Completed = '"+1+"' " +
+                "WHERE ChallengeID = '"+challengeID+"' AND UserName = '"+userName+"' ");
+        boolean success = ctpdb.insertData(sqlQuery);
+        if(!success){
+            errorMessage = ctpdb.getErrorMessage();
+            return false;
+        }return success;
+    }
 }
+
