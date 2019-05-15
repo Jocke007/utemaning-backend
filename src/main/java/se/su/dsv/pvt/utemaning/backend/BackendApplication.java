@@ -20,7 +20,8 @@ public class BackendApplication {
 
 
         DBManagement dbm = new DBManagement();
-        boolean success = dbm.completeChallenge("nils",6);
+        Date date = new Date();
+        boolean success = dbm.addChallenge("testing if boolean will flip","fitnessULTIMATE!",date, 56);
         if (success){
             System.out.println("yey");
         }

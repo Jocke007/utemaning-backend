@@ -439,6 +439,15 @@ public class DBManagement {
         boolean success = ctpdb.insertData(sqlQuery);
         if (!success) {
             errorMessage = ctpdb.getErrorMessage();
+            return false;
+        }
+        if(success){
+            String sqlQuery2 = ("UPDATE Workoutspot SET HasChallenge = '"+1+"' WHERE WorkoutSpotId = '"+workoutSpotID+"' ");
+            boolean success2 = ctpdb.insertData(sqlQuery2);
+            if(!success2){
+                errorMessage = ctpdb.getErrorMessage();
+                return false;
+            }
         }
         return success;
     }
