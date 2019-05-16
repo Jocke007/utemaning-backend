@@ -20,7 +20,8 @@ public class BackendApplication {
 
 /*
         DBManagement dbm = new DBManagement();
-        Date date = new Date();
+
+  Date date = new Date();
         boolean success = dbm.addChallenge("testing if boolean will flip","fitnessULTIMATE!",date, 61);
         if (success){
             System.out.println("yey");
@@ -28,12 +29,15 @@ public class BackendApplication {
 
  */
 /*
-        ArrayList<User> list = dbm.getAllUsers();
-        for(User challenge:list ){
-            System.out.println(challenge.getUserName());
+
+
+        ArrayList<OutdoorGym> list = dbm.getAllOutdoorGyms();
+        for(OutdoorGym challenge:list ){
+            System.out.println(challenge.getName());
         }
-        User user = dbm.getOneUser("nils");
+ User user = dbm.getOneUser("nils");
         System.out.println(user.getUserID());
+
 
  */
 
