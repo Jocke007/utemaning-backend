@@ -9,7 +9,7 @@ import java.util.Collection;
 /**
  * this is a class to handle all database management. instead of having to know every class that does one thing to the database
  * we got 1 class that has metods that does those things. one object to use methods on instead of 20 different classes to handle.
- *
+ * <p>
  * The SQL code written in this class is not very safe and is vulnerable to SQLinjection, we do however not have the time to make
  * it safe.
  * <p>
@@ -36,11 +36,13 @@ import java.util.Collection;
  * removeChallenge              TESTED
  * removeParticipation          TESTED
  * completeChallenge            TESTED
-
+ * alterRank                    TESTED
+ * setAvrageRank                TESTED
+ *
  * <p>
  * TO FIX
- *  Expand AddRank to calculate total rank?
  *
+ * <p>
  * TO DO
  * alter outdoorgym table
  * alter workspot table
@@ -60,7 +62,7 @@ public class DBManagement {
      * will use challengeBuilder method to build the objects
      *
      * @return an arraylist
-     *
+     * <p>
      * TESTED 15/5 AND WORKS AS INTENDED.
      */
     public ArrayList getAllChallenge() {
@@ -86,11 +88,11 @@ public class DBManagement {
      *
      * @param challengeIDInput the ID of the challenge to be retrived.
      * @return returns a challenge object if found in database otherwise an empty object
-     *
+     * <p>
      * TESTED 15/5 AND WORKS AS INTENDED
      */
     public Challenge getSpecificChallenge(int challengeIDInput) {
-        String sqlQuery = ("SELECT * FROM `Challenge` WHERE ChallengeID = '"+challengeIDInput+"' ");
+        String sqlQuery = ("SELECT * FROM `Challenge` WHERE ChallengeID = '" + challengeIDInput + "' ");
         Challenge challenge = null;
         try {
             CachedRowSet crs = ctpdb.getData(sqlQuery);
@@ -111,7 +113,7 @@ public class DBManagement {
      *
      * @param outdoorGym the object whos challanges to retrive
      * @return the same object but with all challanges related to it
-     *
+     * <p>
      * TESTED 15/5 AND WORKS AS INTENDED
      */
     private OutdoorGym getAllChallengeAtSpot(OutdoorGym outdoorGym) {
@@ -126,14 +128,16 @@ public class DBManagement {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        }return outdoorGym;
+        }
+        return outdoorGym;
     }
+
     /**
      * Support method for building challenge objects.
      *
      * @param crs a row from the table.
      * @return challenge object
-     *
+     * <p>
      * TESTED 15/5 AND WORKS AS INTENDED
      */
     private Challenge challengeBuilder(CachedRowSet crs) {
@@ -158,7 +162,7 @@ public class DBManagement {
      * will return empthy list if no outdoorgyms exsists
      *
      * @return arraylist of outdoorgyms
-     *
+     * <p>
      * TESTED 15/5 AND WORKS AS INTENDED
      */
     public ArrayList getAllOutdoorGyms() {
@@ -184,14 +188,14 @@ public class DBManagement {
      *
      * @param workoutSpotIdInput the primarykey of the workoutSpot to be found
      * @return returns the outdoorgym object
-     *
+     * <p>
      * TESTED 15/5 AND WORKS AS INTENDED
      */
     public OutdoorGym getOneOutdoorGym(int workoutSpotIdInput) {
         String sqlQuery = ("SELECT * FROM OutdoorGym, Workoutspot, Location " +
                 "WHERE Workoutspot.WorkoutSpotId = OutdoorGym.WorkoutSpotId AND " +
                 "Workoutspot.WorkoutSpotId = Location.WorkoutSpotID AND " +
-                "OutdoorGym.WorkoutSpotId = ' "+workoutSpotIdInput+" ' ");
+                "OutdoorGym.WorkoutSpotId = ' " + workoutSpotIdInput + " ' ");
         OutdoorGym outdoorGym = null;
         try {
             CachedRowSet crs = ctpdb.getData(sqlQuery);
@@ -211,8 +215,9 @@ public class DBManagement {
 
     /**
      * private method to create outdoorgyms in an attempt to redude code
-     * @return outdoorgym
      *
+     * @return outdoorgym
+     * <p>
      * TESTED 15/5 AND WOKRS AS INTENDED
      */
     private OutdoorGym buildOfOutdoorGym(CachedRowSet crs) {
@@ -241,7 +246,7 @@ public class DBManagement {
      * will return empthy arraylist if no users in database
      *
      * @return returns an Arraylist of all users.
-     *
+     * <p>
      * TESTED 15/5 AND WORKS AS INTENDED
      */
     public ArrayList getAllUsers() {
@@ -267,12 +272,12 @@ public class DBManagement {
      *
      * @param userNameInput name of the user to find
      * @return returns that user
-     *
+     * <p>
      * TESTED 15/5 AND WOKRS AS INTENDED
      */
     public User getOneUser(String userNameInput) {
         User user = null;
-        String sqlQuery = ("SELECT * FROM User WHERE `UserName` = '"+userNameInput+"' ");
+        String sqlQuery = ("SELECT * FROM User WHERE `UserName` = '" + userNameInput + "' ");
         CachedRowSet crs = ctpdb.getData(sqlQuery);
         try {
             while (crs.next()) {
@@ -291,7 +296,7 @@ public class DBManagement {
      *
      * @param crs 1 row from the table
      * @return a user object
-     *
+     * <p>
      * TESTED 15/5 AND WOKRS AS INTENDED
      */
     public User userBuilder(CachedRowSet crs) {
@@ -317,7 +322,7 @@ public class DBManagement {
      * @param userName    name of user
      * @param challengeID ID of the challenge
      * @return a list of the participations
-     *
+     * <p>
      * TESTED 15/5 AND WOKRS AS INTENDED
      */
     public ArrayList getParticipations(String userName, int challengeID) {
@@ -325,11 +330,11 @@ public class DBManagement {
         String sqlQuery = null;
         ArrayList<Participation> participationCollection = new ArrayList<>();
         if (challengeID != 0 && userName.equals(null)) {
-            sqlQuery = ("SELECT * FROM Participation WHERE ChallengeID = '" + challengeID+"' ");
+            sqlQuery = ("SELECT * FROM Participation WHERE ChallengeID = '" + challengeID + "' ");
         } else if (challengeID == 0 && !userName.equals(null)) {
-            sqlQuery = ("SELECT * FROM Participation WHERE UserName = '" + userName+"' ");
-        }else{
-            sqlQuery = ("SELECT * FROM Participation WHERE UserName = '"+userName+"' AND ChallengeID = '"+challengeID+"' ");
+            sqlQuery = ("SELECT * FROM Participation WHERE UserName = '" + userName + "' ");
+        } else {
+            sqlQuery = ("SELECT * FROM Participation WHERE UserName = '" + userName + "' AND ChallengeID = '" + challengeID + "' ");
         }
         CachedRowSet crs = ctpdb.getData(sqlQuery);
         try {
@@ -346,9 +351,10 @@ public class DBManagement {
 
     /**
      * method for building participation objects, will support the other methods that need it
+     *
      * @param crs a table with the information needed
      * @return a participation object
-     *
+     * <p>
      * TESTED 15/5 AND WOKRS AS INTENDED
      */
     private Participation participationBuilder(CachedRowSet crs) {
@@ -375,7 +381,7 @@ public class DBManagement {
      * @param lastName  lastname of the user
      * @param Email     email adress of the user
      * @return boolean true or false depending on result
-     *
+     * <p>
      * TESTED 15/5 AND WOKRS AS INTENDED
      */
     public boolean addUser(String userName, String firstName, String lastName, String Email) {
@@ -397,7 +403,7 @@ public class DBManagement {
      * @param longitude   the longitude of the outdoorGym, taken from stockholm API
      * @param latitude    the latitude of the outdoorGym, taken from stockholm API
      * @return returns a boolean true if all went fine, will return false if not.
-     *
+     * <p>
      * tested 15/5 and works as intended
      */
 
@@ -425,7 +431,7 @@ public class DBManagement {
     /**
      * @param challenge object.
      * @return boolean true of false if successfly stored in database
-     *
+     * <p>
      * tested 15/5 and works as intended
      */
 
@@ -436,7 +442,7 @@ public class DBManagement {
         String desc = challenge.getDescription();
         String sqlQuery = ("INSERT INTO Challenge SET WorkoutSpotid = '" + workoutSpotID
                 + "' , ChallengeName = '" + name + "' , Date = '" + date +
-                "' , Description = '" + desc + "' , Participants = '0' , Expired = '"+0+"' ");
+                "' , Description = '" + desc + "' , Participants = '0' , Expired = '" + 0 + "' ");
         boolean success = ctpdb.insertData(sqlQuery);
         if (!success) {
             errorMessage = ctpdb.getErrorMessage();
@@ -448,25 +454,25 @@ public class DBManagement {
     /**
      * Method for adding a new participation to the database
      * will also get the number of participants from the challenge that the person just joined and incresse that number with one
-     *
+     * <p>
      * WARNING! if it fails on nested method that also use sql the first will still have been added. should be removed if fail.
      * TODO make it commit all or nothing on a failed query.
      *
      * @param challengeID the primarykey of the challenge, and the identifier of the challenge
      * @param userName    a unique identifier for a user
      * @return will return true if all went well, otherwise get the error message and store it and return false
-     *
-     *tested 16/5 and works
+     * <p>
+     * tested 16/5 and works
      */
     public boolean addParticipation(int challengeID, String userName) {
         String sqlQuery = ("INSERT INTO Participation SET ChallengeID ='" + challengeID + "' , UserName = '" + userName + "'" +
-                " , Completed = '"+0+"' ");
+                " , Completed = '" + 0 + "' ");
         boolean success = ctpdb.insertData(sqlQuery);
-        if(success){
+        if (success) {
             Challenge c = getSpecificChallenge(challengeID);
             int i = c.getNumberOfParticipants();
             i++;
-            sqlQuery = ("UPDATE Challenge SET Participants = '"+i+"' WHERE ChallengeID = '"+challengeID+"' ");
+            sqlQuery = ("UPDATE Challenge SET Participants = '" + i + "' WHERE ChallengeID = '" + challengeID + "' ");
             success = ctpdb.insertData(sqlQuery);
         }
         if (!success) {
@@ -477,22 +483,31 @@ public class DBManagement {
     }
 
     /**
-     * method for adding a rank to an outdoorgym
+     * method for adding a rank to an outdoorgym.
+     * will also trigger the change of the avrage rank value for that gym
+     *
      * @param workoutSpotID identifier of the gym
-     * @param userName identifier of the person who ranks it
-     * @param rank rank value in the form of an int
+     * @param userName      identifier of the person who ranks it
+     * @param rank          rank value in the form of an int
      * @return true or false depending on success.
+     *
+     * tested 16/5 and works as intended
      */
-    public boolean addRank(int workoutSpotID, String userName, int rank){
-        String sqlQuery =("INSERT INTO WorkoutSpotRanks SET WorkoutSpotId = '"+workoutSpotID+"' " +
-                ", UserName = '"+userName+"' , Rank = '"+rank+"' ");
+    public boolean addRank(int workoutSpotID, String userName, int rank) {
+        String sqlQuery = ("INSERT INTO WorkoutSpotRanks SET WorkoutSpotId = '" + workoutSpotID + "' " +
+                ", UserName = '" + userName + "' , Rank = '" + rank + "' ");
         boolean success = ctpdb.insertData(sqlQuery);
-        if(!success){
-            errorMessage=getErrorMessage();
+        if (!success) {
+            errorMessage = getErrorMessage();
             return false;
-        }return success;
+        }
+        success = setAvrageRank(workoutSpotID);
+        if(!success){
+            errorMessage = ctpdb.getErrorMessage();
+            return false;
+        }
+        return success;
     }
-
 
 
     /**
@@ -507,62 +522,125 @@ public class DBManagement {
     /**
      * method for removing a challenge from the database. will return true if all went well false is it did not.
      * will also retrive error message if something went wrong.
+     *
      * @param challengeId the ID number of the challenge to be deleted
      * @return boolean true or false
-     *
+     * <p>
      * tested 15/5 and works
      */
-    public boolean removeChallenge(int challengeId){
-        String sqlQuery = ("DELETE FROM `Challenge` WHERE Challenge.ChallengeID = '"+challengeId+"' ");
-            boolean success = ctpdb.insertData(sqlQuery);
-            if(!success){
-                errorMessage = ctpdb.getErrorMessage();
-                return false;
-            }return success;
+    public boolean removeChallenge(int challengeId) {
+        String sqlQuery = ("DELETE FROM `Challenge` WHERE Challenge.ChallengeID = '" + challengeId + "' ");
+        boolean success = ctpdb.insertData(sqlQuery);
+        if (!success) {
+            errorMessage = ctpdb.getErrorMessage();
+            return false;
+        }
+        return success;
     }
 
     /**
      * method for removing a paticipation from the database, takes a challenge id and a username, returns true if deleted, false
      * if not. will also retrive error message and store in errormessage
+     *
      * @param challengeID the identifier of the challenge
-     * @param userName the identifier of the user
+     * @param userName    the identifier of the user
      * @return boolean true or false
      * tested 16/5 and works
      */
-    public boolean removeParticipation (int challengeID, String userName){
-        String sqlQuery = ("DELETE FROM  Participation WHERE Participation.ChallengeID = '"+challengeID+"' AND " +
-                "Participation.UserName = '"+userName+"' ");
+    public boolean removeParticipation(int challengeID, String userName) {
+        String sqlQuery = ("DELETE FROM  Participation WHERE Participation.ChallengeID = '" + challengeID + "' AND " +
+                "Participation.UserName = '" + userName + "' ");
         boolean success = ctpdb.insertData(sqlQuery);
-        if(success){
+        if (success) {
             Challenge c = getSpecificChallenge(challengeID);
             int i = c.getNumberOfParticipants();
             i--;
-            sqlQuery = ("UPDATE Challenge SET Participants = '"+i+"' WHERE ChallengeID = '"+challengeID+"' ");
+            sqlQuery = ("UPDATE Challenge SET Participants = '" + i + "' WHERE ChallengeID = '" + challengeID + "' ");
             success = ctpdb.insertData(sqlQuery);
         }
-        if(!success){
+        if (!success) {
             errorMessage = ctpdb.getErrorMessage();
             return false;
-        }return success;
+        }
+        return success;
     }
 
     /**
      * method for completing a challenge, it will alter the participation table and flip the boolean completed to 1.
-     * @param userName the user
+     *
+     * @param userName    the user
      * @param challengeID the challenge
      * @return returns true if ok false if not ok
-     *
+     * <p>
      * tested 15/5 and works
      */
-    public boolean completeChallenge(String userName, int challengeID){
-        String sqlQuery = ("UPDATE Participation SET Completed = '"+1+"' " +
-                "WHERE ChallengeID = '"+challengeID+"' AND UserName = '"+userName+"' ");
+    public boolean completeChallenge(String userName, int challengeID) {
+        String sqlQuery = ("UPDATE Participation SET Completed = '" + 1 + "' " +
+                "WHERE ChallengeID = '" + challengeID + "' AND UserName = '" + userName + "' ");
+        boolean success = ctpdb.insertData(sqlQuery);
+        if (!success) {
+            errorMessage = ctpdb.getErrorMessage();
+            return false;
+        }
+        return success;
+    }
+
+    /**
+     * a method for changing the rank if the user has already set it once.
+     * will also trigger method for adjusting avrage rank
+     * @param workoutSpotId the outdoorgym identifier
+     * @param userName the user identifier
+     * @param rank the new rank
+     * @return returns true and false depending on success
+     *
+     * tested 16/5 and works as intended
+     */
+    public boolean alterRank(int workoutSpotId, String userName, int rank) {
+        String sqlQuery = ("UPDATE WorkoutSpotRanks SET Rank = '" + rank + "' WHERE WorkoutSpotId = '"+workoutSpotId+"' " +
+                "AND userName = '"+userName+"' ");
+        boolean success = ctpdb.insertData(sqlQuery);
+        if (!success) {
+            errorMessage = getErrorMessage();
+            return false;
+        }
+        success = setAvrageRank(workoutSpotId);
+        if(!success){
+            errorMessage = ctpdb.getErrorMessage();
+            return false;
+        }
+        return success;
+    }
+
+    /**
+     * a method for adjusting the avrage rank of the gym, will trigger when a new rank is either added or altered.
+     * @param workoutSpotID the gym that needs its avrage rank adjusted
+     * @return true or false depending on success
+     *
+     * tested 16/5 and works as intended
+     */
+    private boolean setAvrageRank(int workoutSpotID) {
+        String sqlQuery = ("SELECT * FROM WorkoutSpotRanks WHERE WorkoutSpotId = '" + workoutSpotID + "' ");
+        CachedRowSet crs = ctpdb.getData(sqlQuery);
+        int  count = 0;
+        double result = 0,avrageRank = 0, i = 0;
+        try {
+            while (crs.next()) {
+                i = crs.getDouble("Rank");
+                count++;
+                avrageRank += i;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            errorMessage = ctpdb.getErrorMessage();
+        }
+        result = avrageRank/count;
+        sqlQuery = ("UPDATE Workoutspot SET Rank = '"+result+"' WHERE workoutSpotId = " +
+               " '"+workoutSpotID+"'" );
         boolean success = ctpdb.insertData(sqlQuery);
         if(!success){
             errorMessage = ctpdb.getErrorMessage();
             return false;
         }return success;
     }
-
 }
-

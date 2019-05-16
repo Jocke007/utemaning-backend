@@ -18,7 +18,7 @@ public class BackendApplication {
 
 
         DBManagement dbm = new DBManagement();
-        dbm.addRank(60, "nils", 5);
+        dbm.alterRank(60, "nillls", 5);
 
 
 /*
