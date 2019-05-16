@@ -18,7 +18,7 @@ public class BackendApplication {
 
 
         DBManagement dbm = new DBManagement();
-        dbm.removeParticipation(18, "nils");
+        dbm.addRank(60, "nils", 5);
 
 
 /*
@@ -87,7 +87,7 @@ public class BackendApplication {
         DBManagement dbm = new DBManagement();
         OutdoorGym gym = dbm.getOneOutdoorGym(c.getWorkoutSpotID());
         gym.addChallange(c);
-        dbm.addChallenge(c.getDescription(), c.getName(), c.getEventTimeAndDate(), c.getWorkoutSpotID());
+        dbm.addChallenge(c);
     }
 
 

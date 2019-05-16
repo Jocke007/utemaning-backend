@@ -424,20 +424,20 @@ public class DBManagement {
     }
 
     /**
-     * @param desc          decription of challenge
-     * @param name          name of challenge
-     * @param date          date of challege
-     * @param workoutSpotID at what location is the challenge
+     * @param challenge object.
      * @return boolean true of false if successfly stored in database
      *
      * tested 15/5 and works as intended
      */
 
-    public boolean addChallenge(String desc, String name, java.util.Date date, int workoutSpotID) {
-        boolean expired = false;
+    public boolean addChallenge(Challenge challenge) {
+        int workoutSpotID = challenge.getWorkoutSpotID();
+        String name = challenge.getName();
+        java.util.Date date = challenge.getEventTimeAndDate();
+        String desc = challenge.getDescription();
         String sqlQuery = ("INSERT INTO Challenge SET WorkoutSpotid = '" + workoutSpotID
                 + "' , ChallengeName = '" + name + "' , Date = '" + date +
-                "' , Description = '" + desc + "' , Participants = '0' , Expired = '"+expired+"' ");
+                "' , Description = '" + desc + "' , Participants = '0' , Expired = '"+0+"' ");
         boolean success = ctpdb.insertData(sqlQuery);
         if (!success) {
             errorMessage = ctpdb.getErrorMessage();
@@ -487,13 +487,26 @@ public class DBManagement {
         }
         return true;
     }
-    /*
-    public boolean addRank(int challengeID){
 
+    /**
+     * method for adding a rank to an outdoorgym
+     * @param workoutSpotID identifier of the gym
+     * @param userName identifier of the person who ranks it
+     * @param rank rank value in the form of an int
+     * @return true or false depending on success.
+     */
+    public boolean addRank(int workoutSpotID, String userName, int rank){
+        String sqlQuery =("INSERT INTO WorkoutSpotRanks SET WorkoutSpotId = '"+workoutSpotID+"' " +
+                ", UserName = '"+userName+"' , Rank = '"+rank+"' ");
+        boolean success = ctpdb.insertData(sqlQuery);
+        if(!success){
+            errorMessage=getErrorMessage();
+            return false;
+        }return success;
     }
 
 
-     */
+
     /**
      * a method for forwarding the error message so it can be used if needed
      *
