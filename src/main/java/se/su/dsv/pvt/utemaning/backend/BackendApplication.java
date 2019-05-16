@@ -88,7 +88,6 @@ public class BackendApplication {
     public void createNewChallenge(@RequestBody Challenge c){
         DBManagement dbm = new DBManagement();
         OutdoorGym gym = dbm.getOneOutdoorGym(c.getWorkoutSpotID());
-        gym.addChallange(c);
         dbm.addChallenge(c);
     }
 
