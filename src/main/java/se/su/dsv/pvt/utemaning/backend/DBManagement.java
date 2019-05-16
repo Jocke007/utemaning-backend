@@ -30,19 +30,18 @@ import java.util.Collection;
  * participationBuilder         TESTED
  * addNewUser                   TESTED
  * addNewOutdoorGym             TESTED
- * addNewChallenge              TESTED
+ * addNewChallenge
  * addNewParticipation          TESTED
- * addRank
+ * addRank                      TESTED
  * removeChallenge              TESTED
  * removeParticipation          TESTED
  * completeChallenge            TESTED
 
  * <p>
  * TO FIX
- *
+ *  Expand AddRank to calculate total rank?
  *
  * TO DO
- * rank outdoorgym
  * alter outdoorgym table
  * alter workspot table
  *
@@ -443,17 +442,6 @@ public class DBManagement {
             errorMessage = ctpdb.getErrorMessage();
             return false;
         }
-
-        if(success){
-            String sqlQuery2 = ("UPDATE Workoutspot SET HasChallenge = '"+1+"' WHERE WorkoutSpotId = '"+workoutSpotID+"' ");
-            boolean success2 = ctpdb.insertData(sqlQuery2);
-            if(!success2){
-                errorMessage = ctpdb.getErrorMessage();
-                return false;
-            }
-        }
-
-
         return success;
     }
 
