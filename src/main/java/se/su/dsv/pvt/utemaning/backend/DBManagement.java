@@ -1,10 +1,9 @@
 package se.su.dsv.pvt.utemaning.backend;
 
 import javax.sql.rowset.CachedRowSet;
-import java.sql.*;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Collection;
 
 /**
  * this is a class to handle all database management. instead of having to know every class that does one thing to the database
@@ -13,6 +12,7 @@ import java.util.Collection;
  * The SQL code written in this class is not very safe and is vulnerable to SQLinjection, we do however not have the time to make
  * it safe.
  * <p>
+ * Comments are above the code it refers to
  * Comments are above the code it refers to
  * <p>
  * METHODS SO FAR

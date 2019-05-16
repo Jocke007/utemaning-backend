@@ -62,10 +62,6 @@ public class BackendApplication {
  */
 
 
-
-
-
-
     }
 
     //TEST FetchJSONFromAPI (Print all gyms)
@@ -76,20 +72,33 @@ public class BackendApplication {
     public class getAllGyms {
         @RequestMapping(value = "/allGyms", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
         public @ResponseBody
-        ArrayList<OutdoorGym> getAllGyms() {
+        ArrayList<OutdoorGym> getAllGymsmethod() {
             DBManagement dbm = new DBManagement();
             ArrayList<OutdoorGym> allGyms;
             allGyms = dbm.getAllOutdoorGyms();
             return allGyms;
         }
     }
-    //Behövs det ResponseEntity<Challenge> här?
-    @RequestMapping(value = "createChallenge", method = RequestMethod.POST)
-    public void createNewChallenge(@RequestBody Challenge c){
-        DBManagement dbm = new DBManagement();
-        OutdoorGym gym = dbm.getOneOutdoorGym(c.getWorkoutSpotID());
-        dbm.addChallenge(c);
+
+    public class createNewChallenge {
+        //Behövs det ResponseEntity<Challenge> här?
+        @RequestMapping(value = "/createChallenge", method = RequestMethod.POST)
+        public void createNewChallengemethod(@RequestBody Challenge c) {
+            DBManagement dbm = new DBManagement();
+            OutdoorGym gym = dbm.getOneOutdoorGym(c.getWorkoutSpotID());
+            dbm.addChallenge(c);
+        }
     }
+
+    public class removeChallenge {
+        @RequestMapping(value = "/removeChallenge/{id}", method = RequestMethod.PUT)
+        public Challenge removeChallengemethod(@PathVariable("id") Challenge c){
+            DBManagement dbm =  new DBManagement();
+            dbm.removeChallenge(c.getChallengeID());
+            return c;
+        }
+    }
+
 
 
     //Den här får inget error men den verkar inte skicka tillbaka rätt informamtion. Vi borde testa att den
@@ -112,7 +121,7 @@ public class BackendApplication {
     public class sayHello {
         @CrossOrigin
         @RequestMapping(value = "/sayHello", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-        public String sayHello() {
+        public String sayHellomethod() {
             return "Hello world";
         }
     }
