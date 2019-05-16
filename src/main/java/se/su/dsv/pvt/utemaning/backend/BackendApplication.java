@@ -85,9 +85,16 @@ public class BackendApplication {
     public class createNewChallenge {
         //Behövs det ResponseEntity<Challenge> här?
         @RequestMapping(value = "/createChallenge", method = RequestMethod.POST)
-        public void createNewChallengemethod(@RequestBody Challenge c) {
+        public void createNewChallengeMethod(@RequestBody Challenge c) {
             OutdoorGym gym = dbm.getOneOutdoorGym(c.getWorkoutSpotID());
             dbm.addChallenge(c);
+        }
+    }
+
+    public class createParticipation{
+        @RequestMapping(value = "/createParticipation", method = RequestMethod.POST)
+        public void createNewChallengeMethod(@RequestBody Challenge c, User u){
+            dbm.addParticipation(c.getChallengeID(), u.getUserName());
         }
     }
 
