@@ -8,8 +8,11 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 
 
+
 @SpringBootApplication
 public class BackendApplication {
+    DBManagement dbm = new DBManagement();
+
 
     public static void main(String[] args) {
 
@@ -73,7 +76,6 @@ public class BackendApplication {
         @RequestMapping(value = "/allGyms", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
         public @ResponseBody
         ArrayList<OutdoorGym> getAllGymsmethod() {
-            DBManagement dbm = new DBManagement();
             ArrayList<OutdoorGym> allGyms;
             allGyms = dbm.getAllOutdoorGyms();
             return allGyms;
@@ -84,7 +86,6 @@ public class BackendApplication {
         //Behövs det ResponseEntity<Challenge> här?
         @RequestMapping(value = "/createChallenge", method = RequestMethod.POST)
         public void createNewChallengemethod(@RequestBody Challenge c) {
-            DBManagement dbm = new DBManagement();
             OutdoorGym gym = dbm.getOneOutdoorGym(c.getWorkoutSpotID());
             dbm.addChallenge(c);
         }
@@ -93,7 +94,6 @@ public class BackendApplication {
     public class removeChallenge {
         @RequestMapping(value = "/removeChallenge/{id}", method = RequestMethod.PUT)
         public Challenge removeChallengemethod(@PathVariable("id") Challenge c){
-            DBManagement dbm =  new DBManagement();
             dbm.removeChallenge(c.getChallengeID());
             return c;
         }
@@ -111,9 +111,17 @@ public class BackendApplication {
         OutdoorGym response(@RequestParam("gymID") String gymID) {
 
             int outdoorGymID = Integer.parseInt(gymID);
-            DBManagement dbm = new DBManagement();
             OutdoorGym gym = dbm.getOneOutdoorGym(outdoorGymID);
             return gym;
+        }
+    }
+
+    @RestController
+    public class completeChallenge{
+        @RequestMapping(value = "/completeChallenge/{id}", method = RequestMethod.PUT)
+        public Participation  tcompleteChallengeMethod(@RequestParam Participation  p){
+            dbm.completeChallenge(p.getUserName(), p.getChallengeID());
+            return p;
         }
     }
 
