@@ -32,9 +32,11 @@ import java.util.Collection;
  * addNewOutdoorGym             TESTED
  * addNewChallenge              TESTED
  * addNewParticipation          TESTED
+ * addRank
  * removeChallenge              TESTED
  * removeParticipation          TESTED
  * completeChallenge            TESTED
+
  * <p>
  * TO FIX
  *
@@ -457,25 +459,41 @@ public class DBManagement {
 
     /**
      * Method for adding a new participation to the database
+     * will also get the number of participants from the challenge that the person just joined and incresse that number with one
+     *
+     * WARNING! if it fails on nested method that also use sql the first will still have been added. should be removed if fail.
+     * TODO make it commit all or nothing on a failed query.
      *
      * @param challengeID the primarykey of the challenge, and the identifier of the challenge
      * @param userName    a unique identifier for a user
      * @return will return true if all went well, otherwise get the error message and store it and return false
      *
-     *tested 15/5 and works
+     *tested 16/5 and works
      */
     public boolean addParticipation(int challengeID, String userName) {
-        boolean completed = false;
         String sqlQuery = ("INSERT INTO Participation SET ChallengeID ='" + challengeID + "' , UserName = '" + userName + "'" +
-                " , Completed = '"+completed+"' ");
+                " , Completed = '"+0+"' ");
         boolean success = ctpdb.insertData(sqlQuery);
+        if(success){
+            Challenge c = getSpecificChallenge(challengeID);
+            int i = c.getNumberOfParticipants();
+            i++;
+            sqlQuery = ("UPDATE Challenge SET Participants = '"+i+"' WHERE ChallengeID = '"+challengeID+"' ");
+            success = ctpdb.insertData(sqlQuery);
+        }
         if (!success) {
             errorMessage = ctpdb.getErrorMessage();
             return false;
         }
         return true;
     }
+    /*
+    public boolean addRank(int challengeID){
 
+    }
+
+
+     */
     /**
      * a method for forwarding the error message so it can be used if needed
      *
@@ -508,12 +526,19 @@ public class DBManagement {
      * @param challengeID the identifier of the challenge
      * @param userName the identifier of the user
      * @return boolean true or false
-     * tested 15/5 and works
+     * tested 16/5 and works
      */
     public boolean removeParticipation (int challengeID, String userName){
         String sqlQuery = ("DELETE FROM  Participation WHERE Participation.ChallengeID = '"+challengeID+"' AND " +
                 "Participation.UserName = '"+userName+"' ");
         boolean success = ctpdb.insertData(sqlQuery);
+        if(success){
+            Challenge c = getSpecificChallenge(challengeID);
+            int i = c.getNumberOfParticipants();
+            i--;
+            sqlQuery = ("UPDATE Challenge SET Participants = '"+i+"' WHERE ChallengeID = '"+challengeID+"' ");
+            success = ctpdb.insertData(sqlQuery);
+        }
         if(!success){
             errorMessage = ctpdb.getErrorMessage();
             return false;
@@ -537,5 +562,6 @@ public class DBManagement {
             return false;
         }return success;
     }
+
 }
 

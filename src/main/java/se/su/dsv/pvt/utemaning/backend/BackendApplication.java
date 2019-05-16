@@ -16,9 +16,12 @@ public class BackendApplication {
         SpringApplication.run(BackendApplication.class, args);
 
 
-/*
-        DBManagement dbm = new DBManagement();
 
+        DBManagement dbm = new DBManagement();
+        dbm.removeParticipation(18, "nils");
+
+
+/*
   Date date = new Date();
         boolean success = dbm.addChallenge("testing if boolean will flip","fitnessULTIMATE!",date, 61);
         if (success){
