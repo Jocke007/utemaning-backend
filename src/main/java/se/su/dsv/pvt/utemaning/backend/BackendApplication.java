@@ -99,6 +99,14 @@ public class BackendApplication {
         }
     }
 
+    public class removeParticipation{
+        @RequestMapping(value = "/removeParticipation/{id}", method = RequestMethod.PUT)
+        public Participation removeParticipationMethod(@PathVariable("id") Participation p){
+            dbm.removeParticipation(p.getChallengeID(), p.getUserName());
+            return p;
+        }
+    }
+
 
 
     //Den här får inget error men den verkar inte skicka tillbaka rätt informamtion. Vi borde testa att den
