@@ -50,6 +50,9 @@ public class Challenge {
     public Date getEventTimeAndDate() {
         return eventTimeAndDate;
     }
+    public long getTime(){
+        return eventTimeAndDate.getTime();
+    }
     public void setEventTimeAndDate(Date d){
         eventTimeAndDate = d;
     }
