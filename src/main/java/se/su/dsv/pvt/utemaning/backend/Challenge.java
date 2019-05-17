@@ -8,15 +8,15 @@ import java.util.*;
 public class Challenge {
     private String name, description;
     private int numberOfParticipants, challengeID, workoutSpotID;
-    private Date eventTimeAndDate;
+    private Date date;
 
-    public Challenge(String name, int numberOfParticipants, Date eventTimeAndDate, String description,
+    public Challenge(String name, int numberOfParticipants, Date date, String description,
                      int challengeID, int workoutspotID){
         this.name = name;
         this.numberOfParticipants = numberOfParticipants;
         this.challengeID = challengeID;
         this.workoutSpotID = workoutspotID;
-        this.eventTimeAndDate = eventTimeAndDate;
+        this.date = date;
         this.description = description;
     }
 
@@ -48,19 +48,21 @@ public class Challenge {
     }
 
     public Date getEventTimeAndDate() {
-        return eventTimeAndDate;
+        return date;
     }
     public long getTime(){
-        return eventTimeAndDate.getTime();
+        return date.getTime();
     }
     public void setEventTimeAndDate(Date d){
-        eventTimeAndDate = d;
+        date = d;
     }
-
+/*
     @Override
     public String toString(){
         return "\nChallenge toString: "+
                 "\nName: "+ name +
                 "\nDate: "+ eventTimeAndDate;
     }
+
+ */
 }
