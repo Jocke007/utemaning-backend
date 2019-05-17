@@ -94,14 +94,14 @@ public class BackendApplication {
     public class createParticipation{
         @RequestMapping(value = "/createParticipation", method = RequestMethod.POST)
         public void createNewChallengeMethod(@RequestBody Challenge c, User u){
-            dbm.addParticipation(c.getChallengeID(), u.getUserName());
+            dbm.addParticipation(c, u);
         }
     }
 
     public class removeChallenge {
         @RequestMapping(value = "/removeChallenge/{id}", method = RequestMethod.PUT)
         public Challenge removeChallengemethod(@PathVariable("id") Challenge c){
-            dbm.removeChallenge(c.getChallengeID());
+            dbm.removeChallenge(c);
             return c;
         }
     }

@@ -525,12 +525,13 @@ public class DBManagement {
      * method for removing a challenge from the database. will return true if all went well false is it did not.
      * will also retrive error message if something went wrong.
      *
-     * @param challengeId the ID number of the challenge to be deleted
+     * @param c Challenge to be deleted.
      * @return boolean true or false
      * <p>
      * tested 15/5 and works
      */
-    public boolean removeChallenge(int challengeId) {
+    public boolean removeChallenge(Challenge c) {
+        int challengeId = c.getChallengeID();
         String sqlQuery = ("DELETE FROM `Challenge` WHERE Challenge.ChallengeID = '" + challengeId + "' ");
         boolean success = ctpdb.insertData(sqlQuery);
         if (!success) {
