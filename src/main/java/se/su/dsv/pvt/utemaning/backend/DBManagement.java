@@ -488,14 +488,15 @@ public class DBManagement {
      * method for adding a rank to an outdoorgym.
      * will also trigger the change of the avrage rank value for that gym
      *
-     * @param workoutSpotID identifier of the gym
-     * @param userName      identifier of the person who ranks it
-     * @param rank          rank value in the form of an int
+     * @param r rank object containing the user, the outdoorgym and an in rank.
      * @return true or false depending on success.
      *
      * tested 16/5 and works as intended
      */
-    public boolean addRank(int workoutSpotID, String userName, int rank) {
+    public boolean addRank(Rank r) {
+        int workoutSpotID = r.getGym().getId();
+        String userName = r.getUser().getUserName();
+        int rank = r.getRank();
         String sqlQuery = ("INSERT INTO WorkoutSpotRanks SET WorkoutSpotId = '" + workoutSpotID + "' " +
                 ", UserName = '" + userName + "' , Rank = '" + rank + "' ");
         boolean success = ctpdb.insertData(sqlQuery);
