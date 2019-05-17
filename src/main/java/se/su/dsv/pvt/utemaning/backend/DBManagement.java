@@ -233,7 +233,7 @@ public class DBManagement {
             Location location = new Location(longitude, latitude);
             double rating = crs.getDouble("Rating");
             double r = Math.round(rating*100.0)/100.0;
-            outdoorGym = new OutdoorGym(location, gymName, workoutSpotId, uniqueId, gymDesctiption,rating);
+            outdoorGym = new OutdoorGym(location, gymName, workoutSpotId, uniqueId, gymDesctiption,r);
             outdoorGym = getAllChallengeAtSpot(outdoorGym);
 
         } catch (SQLException e) {
@@ -365,7 +365,7 @@ public class DBManagement {
             int challengeID = crs.getInt("ChallengeID");
             boolean completed = crs.getBoolean("Completed");
             User user = getOneUser(userName);
-            participation = new Participation(user, challengeID);
+            participation = new Participation(user, challengeID, completed);
         } catch (SQLException e) {
             e.printStackTrace();
             errorMessage = e.getMessage();
