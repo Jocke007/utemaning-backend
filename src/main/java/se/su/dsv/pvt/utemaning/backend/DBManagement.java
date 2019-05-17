@@ -3,6 +3,7 @@ package se.su.dsv.pvt.utemaning.backend;
 import javax.sql.rowset.CachedRowSet;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 /**
@@ -231,6 +232,7 @@ public class DBManagement {
             String uniqueId = crs.getString("StockholmStadAPIKey");
             Location location = new Location(longitude, latitude);
             double rating = crs.getDouble("Rating");
+            double r = Math.round(rating*100.0)/100.0;
             outdoorGym = new OutdoorGym(location, gymName, workoutSpotId, uniqueId, gymDesctiption,rating);
             outdoorGym = getAllChallengeAtSpot(outdoorGym);
 

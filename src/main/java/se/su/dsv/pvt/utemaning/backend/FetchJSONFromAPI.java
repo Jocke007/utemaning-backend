@@ -134,7 +134,7 @@ public class FetchJSONFromAPI{
      * @param gymDescription Short description
      */
     public void parseGym(int i, Location position, String gymName, String uniqueId, String gymDescription){
-        outdoorGymHashMap.put(i, new OutdoorGym(position,gymName,i, uniqueId, gymDescription));
+        outdoorGymHashMap.put(i, new OutdoorGym(position,gymName,i, uniqueId, gymDescription,5));
 
         //TEST
         System.out.println(
