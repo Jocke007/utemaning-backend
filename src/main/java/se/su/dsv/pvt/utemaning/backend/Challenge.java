@@ -47,13 +47,13 @@ public class Challenge {
         return workoutSpotID;
     }
 
-    public Date getEventTimeAndDate() {
+    public Date getDate() {
         return date;
     }
     public long getTime(){
         return date.getTime();
     }
-    public void setEventTimeAndDate(Date d){
+    public void setDate(Date d){
         date = d;
     }
 /*
