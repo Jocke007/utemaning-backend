@@ -231,7 +231,7 @@ public class DBManagement {
             String gymDesctiption = crs.getString("outdoorGymDesc");
             String uniqueId = crs.getString("StockholmStadAPIKey");
             Location location = new Location(longitude, latitude);
-            double rank = crs.getDouble("Rank");
+            double rank = crs.getDouble("Rating");
             outdoorGym = new OutdoorGym(location, gymName, workoutSpotId, uniqueId, gymDesctiption);
             outdoorGym = getAllChallengeAtSpot(outdoorGym);
 
@@ -493,12 +493,12 @@ public class DBManagement {
      *
      * tested 16/5 and works as intended
      */
-    public boolean addRank(Rank r) {
+    public boolean addRank(Rating r) {
         int workoutSpotID = r.getGym().getId();
         String userName = r.getUser().getUserName();
         int rank = r.getRank();
         String sqlQuery = ("INSERT INTO WorkoutSpotRanks SET WorkoutSpotId = '" + workoutSpotID + "' " +
-                ", UserName = '" + userName + "' , Rank = '" + rank + "' ");
+                ", UserName = '" + userName + "' , Rating = '" + rank + "' ");
         boolean success = ctpdb.insertData(sqlQuery);
         if (!success) {
             errorMessage = getErrorMessage();
@@ -602,7 +602,7 @@ public class DBManagement {
      * tested 16/5 and works as intended
      */
     public boolean alterRank(int workoutSpotId, String userName, int rank) {
-        String sqlQuery = ("UPDATE WorkoutSpotRanks SET Rank = '" + rank + "' WHERE WorkoutSpotId = '"+workoutSpotId+"' " +
+        String sqlQuery = ("UPDATE WorkoutSpotRanks SET Rating = '" + rank + "' WHERE WorkoutSpotId = '"+workoutSpotId+"' " +
                 "AND userName = '"+userName+"' ");
         boolean success = ctpdb.insertData(sqlQuery);
         if (!success) {
@@ -631,7 +631,7 @@ public class DBManagement {
         double result = 0,avrageRank = 0, i = 0;
         try {
             while (crs.next()) {
-                i = crs.getDouble("Rank");
+                i = crs.getDouble("Rating");
                 count++;
                 avrageRank += i;
             }
@@ -641,7 +641,7 @@ public class DBManagement {
             errorMessage = ctpdb.getErrorMessage();
         }
         result = avrageRank/count;
-        sqlQuery = ("UPDATE Workoutspot SET Rank = '"+result+"' WHERE workoutSpotId = " +
+        sqlQuery = ("UPDATE Workoutspot SET Rating = '"+result+"' WHERE workoutSpotId = " +
                " '"+workoutSpotID+"'" );
         boolean success = ctpdb.insertData(sqlQuery);
         if(!success){

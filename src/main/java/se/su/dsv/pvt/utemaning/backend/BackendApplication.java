@@ -117,10 +117,11 @@ public class BackendApplication {
     @RestController
     public class rankGym{
         @RequestMapping (value = "/rankGym", method = RequestMethod.POST)
-        public void createNewRank(@RequestBody Rank r){
+        public void createNewRank(@RequestBody Rating r){
             dbm.addRank(r);
         }
     }
+
 
 
 

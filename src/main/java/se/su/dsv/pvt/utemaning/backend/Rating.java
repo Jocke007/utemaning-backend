@@ -1,11 +1,11 @@
 package se.su.dsv.pvt.utemaning.backend;
 
-public class Rank {
+public class Rating {
     private int rank;
     private OutdoorGym gym;
     private User u;
 
-    public Rank (OutdoorGym gym, User u){
+    public Rating(OutdoorGym gym, User u){
         this.gym = gym;
         this.u = u;
     }
