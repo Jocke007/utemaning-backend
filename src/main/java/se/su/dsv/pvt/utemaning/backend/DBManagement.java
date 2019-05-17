@@ -439,7 +439,7 @@ public class DBManagement {
     public boolean addChallenge(Challenge challenge) {
         int workoutSpotID = challenge.getWorkoutSpotID();
         String name = challenge.getName();
-        java.util.Date date = challenge.getEventTimeAndDate();
+        java.util.Date date = challenge.getDate();
         String desc = challenge.getDescription();
         String sqlQuery = ("INSERT INTO Challenge SET WorkoutSpotid = '" + workoutSpotID
                 + "' , ChallengeName = '" + name + "' , Date = '" + date +
