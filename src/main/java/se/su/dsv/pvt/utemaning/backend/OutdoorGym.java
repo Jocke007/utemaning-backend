@@ -19,8 +19,8 @@ public class OutdoorGym extends Place {
     private String description;
     private boolean hasChallenge;
 
-    public OutdoorGym(Location location, String name, int id, String uniqueId, String description) {
-        super(location, name, id, uniqueId);
+    public OutdoorGym(Location location, String name, int id, String uniqueId, String description, double avrageRating) {
+        super(location, name, id, uniqueId, avrageRating);
         this.description = description;
     }
 
@@ -32,7 +32,7 @@ public class OutdoorGym extends Place {
     @Override
     public String toString() {
         return "\nOutdoorGym toString: " +
-                "\nName: " + name +
-                "\nLocation: " + location;
+                "\nName: " + getName() +
+                "\nLocation: " + getLocation();
     }
 }

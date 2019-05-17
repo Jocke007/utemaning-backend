@@ -124,7 +124,7 @@ public class DBManagement {
             CachedRowSet crs = ctpdb.getData(sqlQuery);
             while (crs.next()) {
                 Challenge challenge = challengeBuilder(crs);
-                outdoorGym.challengeList.add(challenge);
+                outdoorGym.addChallange(challenge);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -227,12 +227,11 @@ public class DBManagement {
             String gymName = crs.getString("WorkoutSpotName");
             double longitude = crs.getDouble("GLongitude");
             double latitude = crs.getDouble("GLatitude");
-            boolean hasChallenge = crs.getBoolean("HasChallenge");
             String gymDesctiption = crs.getString("outdoorGymDesc");
             String uniqueId = crs.getString("StockholmStadAPIKey");
             Location location = new Location(longitude, latitude);
-            double rank = crs.getDouble("Rating");
-            outdoorGym = new OutdoorGym(location, gymName, workoutSpotId, uniqueId, gymDesctiption);
+            double rating = crs.getDouble("Rating");
+            outdoorGym = new OutdoorGym(location, gymName, workoutSpotId, uniqueId, gymDesctiption,rating);
             outdoorGym = getAllChallengeAtSpot(outdoorGym);
 
         } catch (SQLException e) {
