@@ -458,13 +458,15 @@ public class DBManagement {
      * WARNING! if it fails on nested method that also use sql the first will still have been added. should be removed if fail.
      * TODO make it commit all or nothing on a failed query.
      *
-     * @param challengeID the primarykey of the challenge, and the identifier of the challenge
-     * @param userName    a unique identifier for a user
+     * @param challenge the challenge to join
+     * @param user    the user to join the challenge
      * @return will return true if all went well, otherwise get the error message and store it and return false
      * <p>
      * tested 16/5 and works
      */
-    public boolean addParticipation(int challengeID, String userName) {
+    public boolean addParticipation(Challenge challenge,User user) {
+        int challengeID = challenge.getChallengeID();
+        String userName = user.getUserName();
         String sqlQuery = ("INSERT INTO Participation SET ChallengeID ='" + challengeID + "' , UserName = '" + userName + "'" +
                 " , Completed = '" + 0 + "' ");
         boolean success = ctpdb.insertData(sqlQuery);
