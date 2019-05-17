@@ -545,12 +545,13 @@ public class DBManagement {
      * method for removing a paticipation from the database, takes a challenge id and a username, returns true if deleted, false
      * if not. will also retrive error message and store in errormessage
      *
-     * @param challengeID the identifier of the challenge
-     * @param userName    the identifier of the user
+     * @param p the challenge the user would like to quit
      * @return boolean true or false
      * tested 16/5 and works
      */
-    public boolean removeParticipation(int challengeID, String userName) {
+    public boolean removeParticipation(Participation p) {
+        int challengeID = p.getChallengeID();
+        String userName = p.getUserName();
         String sqlQuery = ("DELETE FROM  Participation WHERE Participation.ChallengeID = '" + challengeID + "' AND " +
                 "Participation.UserName = '" + userName + "' ");
         boolean success = ctpdb.insertData(sqlQuery);

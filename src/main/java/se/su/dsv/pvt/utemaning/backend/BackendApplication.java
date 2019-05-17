@@ -109,7 +109,7 @@ public class BackendApplication {
     public class removeParticipation{
         @RequestMapping(value = "/removeParticipation/{id}", method = RequestMethod.PUT)
         public Participation removeParticipationMethod(@PathVariable("id") Participation p){
-            dbm.removeParticipation(p.getChallengeID(), p.getUserName());
+            dbm.removeParticipation(p);
             return p;
         }
     }
