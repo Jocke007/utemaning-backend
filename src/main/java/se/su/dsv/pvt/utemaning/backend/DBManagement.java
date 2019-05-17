@@ -572,13 +572,14 @@ public class DBManagement {
     /**
      * method for completing a challenge, it will alter the participation table and flip the boolean completed to 1.
      *
-     * @param userName    the user
-     * @param challengeID the challenge
+     * @param p the challenge the user would like to complete.
      * @return returns true if ok false if not ok
      * <p>
      * tested 15/5 and works
      */
-    public boolean completeChallenge(String userName, int challengeID) {
+    public boolean completeChallenge(Participation p) {
+        int challengeID = p.getChallengeID();
+        String userName = p.getUserName();
         String sqlQuery = ("UPDATE Participation SET Completed = '" + 1 + "' " +
                 "WHERE ChallengeID = '" + challengeID + "' AND UserName = '" + userName + "' ");
         boolean success = ctpdb.insertData(sqlQuery);

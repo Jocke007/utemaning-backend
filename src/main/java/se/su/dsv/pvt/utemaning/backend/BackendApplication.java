@@ -135,7 +135,7 @@ public class BackendApplication {
     public class completeChallenge{
         @RequestMapping(value = "/completeChallenge/{id}", method = RequestMethod.PUT)
         public Participation  tcompleteChallengeMethod(@RequestParam Participation  p){
-            dbm.completeChallenge(p.getUserName(), p.getChallengeID());
+            dbm.completeChallenge(p);
             return p;
         }
     }
