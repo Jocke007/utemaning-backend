@@ -19,8 +19,8 @@ public class OutdoorGym extends Place {
     private String description;
     private boolean hasChallenge;
 
-    public OutdoorGym(Location location, String name, int id, String uniqueId, String description, double avrageRating) {
-        super(location, name, id, uniqueId, avrageRating);
+    public OutdoorGym(Location location, String name, int id, String uniqueId, String description, double averageRating) {
+        super(location, name, id, uniqueId, averageRating);
         this.description = description;
     }
 

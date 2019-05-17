@@ -10,14 +10,14 @@ public abstract class Place {
     private String name, uniqueId;
     private int id;
     private ArrayList<Challenge> challengeList = new ArrayList<>();
-    private double avrageRating;
+    private double averageRating;
 
-    public Place(Location location, String name, int id, String uniqueId, double avrageRating){
+    public Place(Location location, String name, int id, String uniqueId, double averageRating){
         this.location = location;
         this.name = name;
         this.id =  id;
         this.uniqueId = uniqueId;
-        this.avrageRating = avrageRating;
+        this.averageRating = averageRating;
 
     }
 
@@ -71,11 +71,11 @@ public abstract class Place {
         challengeList.add(c);
     }
 
-    public double getAvrageRating(){
-        return avrageRating;
+    public double getAverageRating(){
+        return averageRating;
     }
 
-    public void setAvrageRating(double avrageRating) {
-        this.avrageRating = avrageRating;
+    public void setAverageRating(double averageRating) {
+        this.averageRating = averageRating;
     }
 }
