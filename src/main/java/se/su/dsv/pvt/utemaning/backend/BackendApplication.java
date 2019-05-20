@@ -89,11 +89,11 @@ public class BackendApplication {
         //Behövs det ResponseEntity<Challenge> här?
         @RequestMapping(value = "/createChallenge", method = RequestMethod.POST)
         public ResponseEntity<Void> createNewChallengeMethod(@RequestBody Challenge c) {
-            OutdoorGym gym = dbm.getOneOutdoorGym(c.getWorkoutSpotID());
 
             if(c == null)
                 return ResponseEntity.noContent().build();
 
+            OutdoorGym gym = dbm.getOneOutdoorGym(c.getWorkoutSpotID());
             dbm.addChallenge(c);
 
             //Rätt URI?
