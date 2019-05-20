@@ -3,8 +3,11 @@ package se.su.dsv.pvt.utemaning.backend;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.ArrayList;
 
 
@@ -85,9 +88,17 @@ public class BackendApplication {
     public class createNewChallenge {
         //Behövs det ResponseEntity<Challenge> här?
         @RequestMapping(value = "/createChallenge", method = RequestMethod.POST)
-        public void createNewChallengeMethod(@RequestBody Challenge c) {
+        public ResponseEntity<Void> createNewChallengeMethod(@RequestBody Challenge c) {
             OutdoorGym gym = dbm.getOneOutdoorGym(c.getWorkoutSpotID());
+            if(c == null)
+                return ResponseEntity.noContent().build();
+
             dbm.addChallenge(c);
+
+            //URI Location?
+            URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id").buildAndExpand(c.getChallengeID()).toUri();
+
+            return ResponseEntity.created(location).build();
         }
     }
 
@@ -99,8 +110,8 @@ public class BackendApplication {
     }
 
     public class removeChallenge {
-        @RequestMapping(value = "/removeChallenge/{id}", method = RequestMethod.PUT)
-        public Challenge removeChallengemethod(@PathVariable("id") Challenge c){
+        @RequestMapping(value = "/removeChallenge/{challengeID}", method = RequestMethod.PUT)
+        public Challenge removeChallengemethod(@PathVariable int challengeID, Challenge c){
             dbm.removeChallenge(c);
             return c;
         }
