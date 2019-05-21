@@ -116,6 +116,7 @@ public class BackendApplication {
                 return ResponseEntity.noContent().build();
             }
 
+            testString = s;
             URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(s).toUri();
 
             return ResponseEntity.created(location).build();
