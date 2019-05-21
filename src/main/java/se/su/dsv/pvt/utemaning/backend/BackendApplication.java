@@ -2,7 +2,6 @@ package se.su.dsv.pvt.utemaning.backend;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -116,16 +115,13 @@ public class BackendApplication {
                 testString = "you tried but it didn't work";
 //                return ResponseEntity.noContent().build();
 
-                testString = s;
-
-                return "Det fungerade";
+                return "Det fungerade inte";
             }
 
             testString = s;
-            URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(s).toUri();
 
 //            return ResponseEntity.created(location).build();
-           return new ResponseEntity<>("Du failade", HttpStatus.OK);
+           return "Det fungerade";
         }
     }
 
