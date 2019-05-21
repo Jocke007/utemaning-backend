@@ -56,6 +56,10 @@ public class Challenge {
     public void setDate(Date d){
         date = d;
     }
+    
+    public String getTimeAndDate(){
+        return date.toString();
+    }
 /*
     @Override
     public String toString(){
