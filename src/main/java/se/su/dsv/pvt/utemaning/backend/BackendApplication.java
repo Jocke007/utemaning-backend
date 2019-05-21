@@ -15,6 +15,7 @@ import java.util.ArrayList;
 @SpringBootApplication
 public class BackendApplication {
     DBManagement dbm = new DBManagement();
+    String testString = "nothing has happened";
 
 
     public static void main(String[] args) {
@@ -86,15 +87,18 @@ public class BackendApplication {
     }
 
     public class createNewChallenge {
-        //Behövs det ResponseEntity<Challenge> här?
         @RequestMapping(value = "/createChallenge", method = RequestMethod.POST)
         public ResponseEntity<Void> createNewChallengeMethod(@RequestBody Challenge c) {
 
-            if(c == null)
+            if(c == null) {
+                testString  = "didn't work";
                 return ResponseEntity.noContent().build();
+            }
 
             OutdoorGym gym = dbm.getOneOutdoorGym(c.getWorkoutSpotID());
             dbm.addChallenge(c);
+
+            testString = "It worked";
 
             //Rätt URI?
             URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(c.getChallengeID()).toUri();
@@ -172,6 +176,15 @@ public class BackendApplication {
             return "Hello world";
         }
     }
+
+    @RestController
+    public class testString {
+        @RequestMapping(value = "/test")
+        public String sayTest() {
+            return testString;
+        }
+    }
+
 
 
 
