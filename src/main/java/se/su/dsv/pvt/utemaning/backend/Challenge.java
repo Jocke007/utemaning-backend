@@ -57,9 +57,6 @@ public class Challenge {
         date = d;
     }
     
-    public String getTimeAndDate(){
-        return date.toString();
-    }
 /*
     @Override
     public String toString(){
