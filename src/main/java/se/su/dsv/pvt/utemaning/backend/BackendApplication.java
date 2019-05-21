@@ -108,6 +108,21 @@ public class BackendApplication {
         }
     }
 
+    public class changeString{
+        @RequestMapping(value = "/addString", method = RequestMethod.POST)
+        public ResponseEntity<Void> changeStringMethod(@RequestBody String s){
+            if(s == null) {
+                testString = "you tried but it didn't work";
+                return ResponseEntity.noContent().build();
+            }
+
+            URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(s).toUri();
+
+            return ResponseEntity.created(location).build();
+
+        }
+    }
+
     public class createParticipation{
         @RequestMapping(value = "/createParticipation", method = RequestMethod.POST)
         public void createNewChallengeMethod(@RequestBody Challenge c, User u){
