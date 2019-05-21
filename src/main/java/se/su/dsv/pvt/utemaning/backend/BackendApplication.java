@@ -111,11 +111,14 @@ public class BackendApplication {
 
     public class changeString{
         @PostMapping("/addString")
-        public ResponseEntity<String> changeStringMethod(@RequestBody String s){
+        public String changeStringMethod(@RequestBody String s){
             if((s == null) || s.equals("")) {
                 testString = "you tried but it didn't work";
 //                return ResponseEntity.noContent().build();
-                return new ResponseEntity<>("Du failade", HttpStatus.BAD_REQUEST);
+
+                testString = s;
+
+                return "Det fungerade";
             }
 
             testString = s;
