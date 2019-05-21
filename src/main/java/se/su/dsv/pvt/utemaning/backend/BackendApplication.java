@@ -87,7 +87,7 @@ public class BackendApplication {
     }
 
     public class createNewChallenge {
-        @RequestMapping(value = "/createChallenge", method = RequestMethod.POST)
+        @RequestMapping(value = "/createChallenge", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
         public ResponseEntity<String> createNewChallengeMethod(@RequestBody Challenge c) {
             testString = "Entered method";
 
