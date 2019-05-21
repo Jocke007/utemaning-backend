@@ -2,6 +2,7 @@ package se.su.dsv.pvt.utemaning.backend;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -109,18 +110,19 @@ public class BackendApplication {
     }
 
     public class changeString{
-        @RequestMapping(value = "/addString", method = RequestMethod.POST)
-        public ResponseEntity<Void> changeStringMethod(@RequestBody String s){
-            if(s == null) {
+        @PostMapping("/addString")
+        public ResponseEntity<String> changeStringMethod(@RequestBody String s){
+            if((s == null) || s.equals("")) {
                 testString = "you tried but it didn't work";
-                return ResponseEntity.noContent().build();
+//                return ResponseEntity.noContent().build();
+                return new ResponseEntity<>("Du failade", HttpStatus.BAD_REQUEST);
             }
 
             testString = s;
             URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(s).toUri();
 
-            return ResponseEntity.created(location).build();
-
+//            return ResponseEntity.created(location).build();
+           return new ResponseEntity<>("Du failade", HttpStatus.OK);
         }
     }
 
