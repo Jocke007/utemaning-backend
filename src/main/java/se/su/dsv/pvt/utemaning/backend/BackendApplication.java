@@ -179,12 +179,12 @@ public class BackendApplication {
 
     @RestController
     public class testString {
-        @CrossOrigin
-        @RequestMapping(value = "/test", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-        public String sayHellomethod() {
+        @RequestMapping(value = "/test")
+        public String sayTest() {
             return testString;
         }
     }
+
 
 
 
