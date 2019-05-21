@@ -88,7 +88,7 @@ public class BackendApplication {
 
     public class createNewChallenge {
         @RequestMapping(value = "/createChallenge", method = RequestMethod.POST)
-        public ResponseEntity<Void> createNewChallengeMethod(@RequestBody Challenge c) {
+        public ResponseEntity<String> createNewChallengeMethod(@RequestBody Challenge c) {
             testString = "Entered method";
 
             if(c == null) {
