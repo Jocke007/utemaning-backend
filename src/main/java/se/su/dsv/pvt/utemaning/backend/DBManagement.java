@@ -696,7 +696,7 @@ public class DBManagement {
     private java.util.Date getDateToCompare() {
         java.util.Date date = new java.util.Date(Calendar.getInstance().getTimeInMillis());
         long time = date.getTime();
-        long newTime = time + 7200000;
+        long newTime = time - 7200000;
         date.setTime(newTime);
         return date;
     }
