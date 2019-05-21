@@ -56,6 +56,7 @@ public class Challenge {
     public void setDate(Date d){
         date = d;
     }
+    
 /*
     @Override
     public String toString(){
