@@ -143,6 +143,11 @@ public class BackendApplication {
             return p;
         }
 
+    }
+
+    @RestController
+    public class tests{
+
         @PostMapping("/addString")
         public String changeStringMethod(@RequestBody String s){
             if((s == null) || s.equals("")) {
