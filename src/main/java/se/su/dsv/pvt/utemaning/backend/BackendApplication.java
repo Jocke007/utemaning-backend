@@ -137,6 +137,15 @@ public class BackendApplication {
             return gym;
         }
 
+        @RequestMapping(value = "outdoorgym/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+        public @ResponseBody
+        OutdoorGym sendOutdoorGym(@PathVariable("id") int id) {
+
+            int outdoorGymID = id;
+            OutdoorGym gym = dbm.getOneOutdoorGym(outdoorGymID);
+            return gym;
+        }
+
         @RequestMapping(value = "/completeChallenge/{id}", method = RequestMethod.PUT)
         public Participation  tcompleteChallengeMethod(@RequestParam Participation  p){
             dbm.completeChallenge(p);
