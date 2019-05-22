@@ -110,11 +110,16 @@ public class BackendApplication {
             dbm.addParticipation(c, u);
         }
 
-        @RequestMapping(value = "/removeChallenge/{id}", method = RequestMethod.PUT)
-        public Challenge removeChallengemethod(@PathVariable("id") int challengeID){
-            Challenge c = dbm.getSpecificChallenge(challengeID);
+        @RequestMapping(value = "/removeChallenge/{id}", method = RequestMethod.PUT, produces = MediaType.TEXT_PLAIN_VALUE)
+        public String removeChallengemethod(@PathVariable("id") String challengeID){
+
+            if(challengeID == null){
+                return "Fungerar ej";
+            }
+
+            Challenge c = dbm.getSpecificChallenge(Integer.parseInt(challengeID));
             dbm.removeChallenge(c);
-            return c;
+            return "Fungerar";
         }
 
         @RequestMapping(value = "/removeParticipation/{id}", method = RequestMethod.PUT)
@@ -168,7 +173,6 @@ public class BackendApplication {
 
             testString = s;
 
-            URI location = ServletUriComponentsBuilder.fromCurrentRequest().path(s).buildAndExpand(s).toUri();
             return "fungerar!";
         }
 
