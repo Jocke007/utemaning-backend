@@ -158,18 +158,18 @@ public class BackendApplication {
     @RestController
     public class tests{
 
-        @PostMapping(path = "/addString")
-        public ResponseEntity<Void> changeStringMethod(@RequestBody String s){
+        @PostMapping(path = "/addString", produces = MediaType.TEXT_PLAIN_VALUE)
+        public String changeStringMethod(@RequestBody String s){
             if((s == null) || s.equals("")) {
                 testString = "you tried but it didn't work";
-               return ResponseEntity.noContent().build();
+               return "fungerar ej";
 
             }
 
             testString = s;
 
             URI location = ServletUriComponentsBuilder.fromCurrentRequest().path(s).buildAndExpand(s).toUri();
-            return ResponseEntity.created(location).build();
+            return "fungerar!";
         }
 
         @CrossOrigin
