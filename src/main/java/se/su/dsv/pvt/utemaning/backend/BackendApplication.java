@@ -74,9 +74,9 @@ public class BackendApplication {
     //TEST FetchJSONFromAPI (Print all gyms)
     //new FetchJSONFromAPI().parseFromAllOutdoorGyms();
 
-
     @RestController
-    public class getAllGyms {
+    public class UtemaningRestController{
+
         @RequestMapping(value = "/allGyms", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
         public @ResponseBody
         ArrayList<OutdoorGym> getAllGymsmethod() {
@@ -84,9 +84,7 @@ public class BackendApplication {
             allGyms = dbm.getAllOutdoorGyms();
             return allGyms;
         }
-    }
 
-    public class createNewChallenge {
         @RequestMapping(value = "/createChallenge", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
         public ResponseEntity<String> createNewChallengeMethod(@RequestBody Challenge c) {
             testString = "Entered method";
@@ -106,9 +104,45 @@ public class BackendApplication {
 
             return ResponseEntity.created(location).build();
         }
-    }
 
-    public class changeString{
+        @RequestMapping(value = "/createParticipation", method = RequestMethod.POST)
+        public void createNewChallengeMethod(@RequestBody Challenge c, User u){
+            dbm.addParticipation(c, u);
+        }
+
+        @RequestMapping(value = "/removeChallenge/{id}", method = RequestMethod.PUT)
+        public Challenge removeChallengemethod(@PathVariable("id") Challenge c){
+            dbm.removeChallenge(c);
+            return c;
+        }
+
+        @RequestMapping(value = "/removeParticipation/{id}", method = RequestMethod.PUT)
+        public Participation removeParticipationMethod(@PathVariable("id") Participation p){
+            dbm.removeParticipation(p);
+            return p;
+        }
+
+        @RequestMapping (value = "/rankGym", method = RequestMethod.POST)
+        public void createNewRank(@RequestBody Rating r){
+            dbm.addRank(r);
+        }
+
+        @CrossOrigin
+        @RequestMapping(value = "outdoorgymtest", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+        public @ResponseBody
+        OutdoorGym response(@RequestParam("gymID") String gymID) {
+
+            int outdoorGymID = Integer.parseInt(gymID);
+            OutdoorGym gym = dbm.getOneOutdoorGym(outdoorGymID);
+            return gym;
+        }
+
+        @RequestMapping(value = "/completeChallenge/{id}", method = RequestMethod.PUT)
+        public Participation  tcompleteChallengeMethod(@RequestParam Participation  p){
+            dbm.completeChallenge(p);
+            return p;
+        }
+
         @PostMapping("/addString")
         public String changeStringMethod(@RequestBody String s){
             if((s == null) || s.equals("")) {
@@ -121,87 +155,22 @@ public class BackendApplication {
             testString = s;
 
 //            return ResponseEntity.created(location).build();
-           return "Det fungerade";
+            return "Det fungerade";
         }
-    }
 
-    public class createParticipation{
-        @RequestMapping(value = "/createParticipation", method = RequestMethod.POST)
-        public void createNewChallengeMethod(@RequestBody Challenge c, User u){
-            dbm.addParticipation(c, u);
-        }
-    }
-
-    public class removeChallenge {
-        @RequestMapping(value = "/removeChallenge/{id}", method = RequestMethod.PUT)
-        public Challenge removeChallengemethod(@PathVariable("id") Challenge c){
-            dbm.removeChallenge(c);
-            return c;
-        }
-    }
-
-    public class removeParticipation{
-        @RequestMapping(value = "/removeParticipation/{id}", method = RequestMethod.PUT)
-        public Participation removeParticipationMethod(@PathVariable("id") Participation p){
-            dbm.removeParticipation(p);
-            return p;
-        }
-    }
-
-    @RestController
-    public class rankGym{
-        @RequestMapping (value = "/rankGym", method = RequestMethod.POST)
-        public void createNewRank(@RequestBody Rating r){
-            dbm.addRank(r);
-        }
-    }
-
-
-
-
-
-
-
-    //Den här får inget error men den verkar inte skicka tillbaka rätt informamtion. Vi borde testa att den
-    //faktiskt hämtar korrekt data från databasen
-    @RestController
-    public class HelloJSONRestController2 {
-        @CrossOrigin
-        @RequestMapping(value = "outdoorgymtest", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-        public @ResponseBody
-        OutdoorGym response(@RequestParam("gymID") String gymID) {
-
-            int outdoorGymID = Integer.parseInt(gymID);
-            OutdoorGym gym = dbm.getOneOutdoorGym(outdoorGymID);
-            return gym;
-        }
-    }
-
-    @RestController
-    public class completeChallenge{
-        @RequestMapping(value = "/completeChallenge/{id}", method = RequestMethod.PUT)
-        public Participation  tcompleteChallengeMethod(@RequestParam Participation  p){
-            dbm.completeChallenge(p);
-            return p;
-        }
-    }
-
-    @RestController
-    public class sayHello {
         @CrossOrigin
         @RequestMapping(value = "/sayHello", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
         public String sayHellomethod() {
             return "Hello world";
         }
-    }
 
-    @RestController
-    public class testString {
         @RequestMapping(value = "/test")
         public String sayTest() {
             return testString;
         }
+
     }
+
 
 
 
