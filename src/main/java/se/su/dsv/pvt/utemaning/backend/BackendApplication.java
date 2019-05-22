@@ -158,7 +158,7 @@ public class BackendApplication {
     @RestController
     public class tests{
 
-        @PostMapping("/addString")
+        @PostMapping(path = "/addString", produces = MediaType.APPLICATION_JSON_VALUE)
         public String changeStringMethod(@RequestBody String s){
             if((s == null) || s.equals("")) {
                 testString = "you tried but it didn't work";
