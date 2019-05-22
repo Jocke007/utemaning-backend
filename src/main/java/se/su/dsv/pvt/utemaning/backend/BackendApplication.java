@@ -111,7 +111,8 @@ public class BackendApplication {
         }
 
         @RequestMapping(value = "/removeChallenge/{id}", method = RequestMethod.PUT)
-        public Challenge removeChallengemethod(@PathVariable("id") Challenge c){
+        public Challenge removeChallengemethod(@PathVariable("id") int challengeID){
+            Challenge c = dbm.getSpecificChallenge(challengeID);
             dbm.removeChallenge(c);
             return c;
         }
