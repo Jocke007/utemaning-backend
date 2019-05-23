@@ -78,7 +78,6 @@ public class Challenge {
     }
 
 
-
                 /*
     @Override
     public String toString(){

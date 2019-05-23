@@ -9,7 +9,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.ArrayList;
-
+import java.util.Calendar;
 
 
 @SpringBootApplication
@@ -22,14 +22,10 @@ public class BackendApplication {
 
         SpringApplication.run(BackendApplication.class, args);
 
-/*
-
-        DBManagement dbm = new DBManagement();
-        dbm.alterRank(60, "nillls", 5);
 
 
 
- */
+
 /*
   Date date = new Date();
         boolean success = dbm.addChallenge("testing if boolean will flip","fitnessULTIMATE!",date, 61);

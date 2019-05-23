@@ -455,10 +455,11 @@ public class DBManagement {
     public boolean addChallenge(Challenge challenge) {
         int workoutSpotID = challenge.getWorkoutSpotID();
         String name = challenge.getName();
-        java.util.Date date = challenge.getDate();
+        java.util.Date date2 = challenge.getDate();
+        date2.setTime(date2.getTime()+7200000);
         String desc = challenge.getDescription();
         String sqlQuery = ("INSERT INTO Challenge SET WorkoutSpotid = '" + workoutSpotID
-                + "' , ChallengeName = '" + name + "' , Date = '" + date +
+                + "' , ChallengeName = '" + name + "' , Date = '" + date2.toInstant() +
                 "' , Description = '" + desc + "' , Participants = '0' , Expired = '" + 0 + "' ");
         boolean success = ctpdb.insertData(sqlQuery);
         if (!success) {
