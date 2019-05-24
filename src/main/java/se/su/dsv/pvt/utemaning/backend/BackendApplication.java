@@ -95,9 +95,12 @@ public class BackendApplication {
             return "Object received";
         }
 
-        @RequestMapping(value = "/createParticipation", method = RequestMethod.POST)
-        public void createNewChallengeMethod(@RequestBody Challenge c, User u){
+        @RequestMapping(value = "/createParticipation", method = RequestMethod.POST, produces = MediaType.TEXT_PLAIN_VALUE)
+        public String createNewChallengeMethod(@RequestBody Challenge c, User u){
+            if(c == null ||  u == null)
+                return "Input was null";
             dbm.addParticipation(c, u);
+            return "success";
         }
 
         @RequestMapping(value = "removeChallenge/{id}", method = RequestMethod.PUT, produces = MediaType.TEXT_PLAIN_VALUE)
@@ -113,25 +116,31 @@ public class BackendApplication {
         }
 
         @RequestMapping(value = "/removeParticipation/{id}", method = RequestMethod.PUT)
-        public Participation removeParticipationMethod(@PathVariable("id") Participation p){
+        public String removeParticipationMethod(@PathVariable("id") Participation p){
+            if(p == null)
+                return "The object is null";
+
             dbm.removeParticipation(p);
-            return p;
+            return "Success";
         }
 
-        @RequestMapping (value = "/rankGym", method = RequestMethod.POST)
-        public void createNewRank(@RequestBody Rating r){
+        @RequestMapping (value = "/rankGym", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+        public String createNewRank(@RequestBody Rating r){
+            if(r  ==  null)
+                return "object is null";
             dbm.addRank(r);
+            return "Success";
         }
 
-        @CrossOrigin
-        @RequestMapping(value = "outdoorgymtest", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-        public @ResponseBody
-        OutdoorGym response(@RequestParam("gymID") String gymID) {
-
-            int outdoorGymID = Integer.parseInt(gymID);
-            OutdoorGym gym = dbm.getOneOutdoorGym(outdoorGymID);
-            return gym;
-        }
+//        @CrossOrigin
+//        @RequestMapping(value = "outdoorgymtest", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+//        public @ResponseBody
+//        OutdoorGym response(@RequestParam("gymID") String gymID) {
+//
+//            int outdoorGymID = Integer.parseInt(gymID);
+//            OutdoorGym gym = dbm.getOneOutdoorGym(outdoorGymID);
+//            return gym;
+//        }
 
         @RequestMapping(value = "outdoorgym/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
         public @ResponseBody
@@ -142,10 +151,12 @@ public class BackendApplication {
             return gym;
         }
 
-        @RequestMapping(value = "/completeChallenge/{id}", method = RequestMethod.PUT)
-        public Participation  tcompleteChallengeMethod(@RequestParam Participation  p){
+        @RequestMapping(value = "/completeChallenge/{id}", method = RequestMethod.PUT, produces = MediaType.TEXT_PLAIN_VALUE)
+        public String  tcompleteChallengeMethod(@RequestParam Participation  p){
+            if(p  ==  null)
+                return "Object is null";
             dbm.completeChallenge(p);
-            return p;
+            return "Success";
         }
 
     }
