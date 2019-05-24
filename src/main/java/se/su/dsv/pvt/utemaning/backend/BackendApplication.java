@@ -85,7 +85,7 @@ public class BackendApplication {
             }
 
             OutdoorGym gym = dbm.getOneOutdoorGym(c.getWorkoutSpotID());
-            //c.setTimeAndDate();
+            c.setTimeAndDate();
             dbm.addChallenge(c);
 
 
