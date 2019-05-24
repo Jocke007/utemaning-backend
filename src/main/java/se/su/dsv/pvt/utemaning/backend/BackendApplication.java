@@ -3,13 +3,9 @@ package se.su.dsv.pvt.utemaning.backend;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.net.URI;
 import java.util.ArrayList;
-import java.util.Calendar;
 
 
 @SpringBootApplication
@@ -81,25 +77,22 @@ public class BackendApplication {
             return allGyms;
         }
 
-        @RequestMapping(value = "/createChallenge", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-        public ResponseEntity<String> createNewChallengeMethod(@RequestBody Challenge c) {
-            testString = "Entered method";
+        @RequestMapping(value = "/createChallenge", method = RequestMethod.POST, produces = MediaType.TEXT_PLAIN_VALUE)
+        public String createNewChallengeMethod(@RequestBody Challenge c) {
 
             if(c == null) {
-                testString  = "didn't work";
-                return ResponseEntity.noContent().build();
+                return "The entered object is null";
             }
 
             OutdoorGym gym = dbm.getOneOutdoorGym(c.getWorkoutSpotID());
             c.setTimeAndDate();
             dbm.addChallenge(c);
 
-            testString = "It worked";
 
             //Rätt URI?
-            URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(c.getChallengeID()).toUri();
+//            URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(c.getChallengeID()).toUri();
 
-            return ResponseEntity.created(location).build();
+            return "Object received";
         }
 
         @RequestMapping(value = "/createParticipation", method = RequestMethod.POST)
@@ -107,7 +100,7 @@ public class BackendApplication {
             dbm.addParticipation(c, u);
         }
 
-        @RequestMapping(value = "/removeChallenge/{id}", method = RequestMethod.PUT, produces = MediaType.TEXT_PLAIN_VALUE)
+        @RequestMapping(value = "removeChallenge/{id}", method = RequestMethod.PUT, produces = MediaType.TEXT_PLAIN_VALUE)
         public String removeChallengemethod(@PathVariable("id") String challengeID){
 
             if(challengeID == null){
