@@ -1,7 +1,6 @@
 package se.su.dsv.pvt.utemaning.backend;
 
-import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Date;
 
 /**
  * fixed this class with proper getters and a few setters, not challengeID or workoutspotID
@@ -26,8 +25,8 @@ public class Challenge {
         return name;
     }
 
-    public long getTimeTime(){
-        return time;
+    public Date getTimeTime(){
+        return timeAndDate;
     }
 
     public void setName(String name) {
@@ -74,8 +73,8 @@ public class Challenge {
         try {
 
 //            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd, HH:mm");
-            timeAndDate = dateFormat.parse(date);
+//            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd, HH:mm");
+//            timeAndDate = dateFormat.parse(date);
             timeAndDate.setTime(time);
         } catch (Exception e) {
 
