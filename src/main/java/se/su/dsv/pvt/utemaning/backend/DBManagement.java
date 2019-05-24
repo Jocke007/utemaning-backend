@@ -3,7 +3,6 @@ package se.su.dsv.pvt.utemaning.backend;
 import javax.sql.rowset.CachedRowSet;
 import java.sql.Date;
 import java.sql.SQLException;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 

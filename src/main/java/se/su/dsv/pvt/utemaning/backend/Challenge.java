@@ -26,6 +26,10 @@ public class Challenge {
         return name;
     }
 
+    public long getTimeTime(){
+        return time;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
