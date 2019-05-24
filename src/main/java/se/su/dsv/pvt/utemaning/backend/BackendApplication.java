@@ -84,10 +84,10 @@ public class BackendApplication {
                 return "The entered object is null";
             }
 
-            testString =  c.getTimeTime().toString();
 
             OutdoorGym gym = dbm.getOneOutdoorGym(c.getWorkoutSpotID());
             c.setTimeAndDate();
+            testString =  c.getTimeTime().toString();
             dbm.addChallenge(c);
 
 
