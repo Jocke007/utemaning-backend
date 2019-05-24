@@ -69,9 +69,9 @@ public class Challenge {
     public void setTimeAndDate() {
         try {
 
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd-hh-mm-ss");
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
             timeAndDate = dateFormat.parse(date);
-         //   timeAndDate.setTime(time);
+            timeAndDate.setTime(time);
         } catch (Exception e) {
 
         }
