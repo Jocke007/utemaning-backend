@@ -25,10 +25,6 @@ public class Challenge {
         return name;
     }
 
-    public Date getTimeTime(){
-        return timeAndDate;
-    }
-
     public void setName(String name) {
         this.name = name;
     }
@@ -71,17 +67,11 @@ public class Challenge {
 
     public void setTimeAndDate() {
         try {
-
-//            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
-//            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd, HH:mm");
-//            timeAndDate = dateFormat.parse(date);
             timeAndDate.setTime(time);
         } catch (Exception e) {
 
         }
     }
-   // MMMMM dd, yyyy hh:mm:ss AAA
-
                 /*
     @Override
     public String toString(){
