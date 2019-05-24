@@ -69,14 +69,14 @@ public class Challenge {
     public void setTimeAndDate() {
         try {
 
-            SimpleDateFormat dateFormat = new SimpleDateFormat("MMMMM dd, yyyy hh:mm:ss AAA");
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
             timeAndDate = dateFormat.parse(date);
-         //   timeAndDate.setTime(time);
+            timeAndDate.setTime(time);
         } catch (Exception e) {
 
         }
     }
-
+   // MMMMM dd, yyyy hh:mm:ss AAA
 
                 /*
     @Override
