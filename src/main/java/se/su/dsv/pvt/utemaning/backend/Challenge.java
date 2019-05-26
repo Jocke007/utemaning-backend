@@ -67,6 +67,7 @@ public class Challenge {
 
     public void setTimeAndDate() {
         try {
+            timeAndDate = new Date(0);
             timeAndDate.setTime(time);
         } catch (Exception e) {
 
