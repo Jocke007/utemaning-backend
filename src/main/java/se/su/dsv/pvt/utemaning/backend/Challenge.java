@@ -67,7 +67,7 @@ public class Challenge {
 
     public void setTimeAndDate() {
         try {
-            timeAndDate = new Date(0);
+            timeAndDate = new Date(0); // Nödvändig för att deklarera ett Date-objekt, annars kastas ett NullPointerException
             timeAndDate.setTime(time);
         } catch (Exception e) {
 
