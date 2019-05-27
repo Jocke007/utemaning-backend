@@ -165,11 +165,12 @@ public class BackendApplication {
             dbm.completeChallenge(participationId);
             return "Success";
         }
-        @RequestMapping(value = "/getParticipations/user/{userID}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-        public ArrayList getParticipation(@PathVariable("id") int id){
+        @RequestMapping(value = "/getParticipation/{userID}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+        public ArrayList<Participation> getParticipation(@PathVariable("userID") int id){
             User u  = dbm.getOneUserOnId(id);
-            ArrayList<Participation> participationCollection = new ArrayList<>();
+            ArrayList<Participation> participationCollection;
             participationCollection = dbm.getParticipations(u.getUserName(), 0);
+            testString = participationCollection.toString();
 
             return participationCollection;
         }
