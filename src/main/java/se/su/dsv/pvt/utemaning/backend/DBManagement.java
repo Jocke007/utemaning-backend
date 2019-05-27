@@ -379,8 +379,9 @@ public class DBManagement {
             String userName = crs.getString("UserName");
             int challengeID = crs.getInt("ChallengeID");
             boolean completed = crs.getBoolean("Completed");
+            int participationID = crs.getInt("ParticipationId");
             User user = getOneUser(userName);
-            participation = new Participation(user, challengeID, completed);
+            participation = new Participation(user, challengeID, completed, participationID);
         } catch (SQLException e) {
             e.printStackTrace();
             errorMessage = e.getMessage();
