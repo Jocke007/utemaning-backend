@@ -109,13 +109,10 @@ public class BackendApplication {
         }
 
         @RequestMapping(value = "removeChallenge/{id}", method = RequestMethod.PUT, produces = MediaType.TEXT_PLAIN_VALUE)
-        public String removeChallengemethod(@PathVariable("id") String challengeID){
+        public String removeChallengemethod(@PathVariable("id") int challengeID){
 
-            if(challengeID == null){
-                return "Fungerar ej";
-            }
 
-            Challenge c = dbm.getSpecificChallenge(Integer.parseInt(challengeID));
+            Challenge c = dbm.getSpecificChallenge(challengeID);
             dbm.removeChallenge(c);
             return "Fungerar";
         }
