@@ -132,10 +132,12 @@ public class BackendApplication {
         }
 
         @RequestMapping (value = "/rankGym", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-        public String createNewRank(@RequestBody Rating r){
-            if(r  ==  null)
+        public String createNewRank(@RequestBody int workoutSpotID, int userID, int rank){
+            if(workoutSpotID  ==  0)
                 return "object is null";
-            dbm.addRank(r);
+
+            User user = dbm.getOneUserOnId(userID);
+            dbm.addRank(workoutSpotID,user.getUserName(),rank);
             return "Success";
         }
 
