@@ -22,4 +22,8 @@ public class Participation {
     public boolean getCompleted(){
         return completed;
     }
+
+    public int getParticipationID() {
+        return participationID;
+    }
 }
