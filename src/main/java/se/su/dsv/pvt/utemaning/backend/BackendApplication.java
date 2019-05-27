@@ -114,11 +114,14 @@ public class BackendApplication {
         }
 
         @RequestMapping(value = "/removeParticipation/{id}", method = RequestMethod.PUT)
-        public String removeParticipationMethod(@PathVariable("id") Participation p){
-            if(p == null)
+
+        //changed input to participation ID instead
+        public String removeParticipationMethod(@PathVariable("id") int participationId){
+            //changed from p == null to participationID == 0 as ints cant be null
+            if(participationId == 0)
                 return "The object is null";
 
-            dbm.removeParticipation(p);
+            dbm.removeParticipation(participationId);
             return "Success";
         }
 
