@@ -131,7 +131,7 @@ public class BackendApplication {
             return "Success";
         }
 
-        @RequestMapping (value = "/rateGym/gym/{gymID}/user/{userID}/rank/{rate}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+        @RequestMapping (value = "/rateGym/gym/{gymID}/user/{userID}/rate/{rate}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
         public String createNewRate(@PathVariable("gymID") int workoutSpotID, @PathVariable("userID") int userID, @PathVariable("rate") int rate){
             if(workoutSpotID  ==  0)
                 return "object is null";
