@@ -153,10 +153,10 @@ public class BackendApplication {
         }
 
         @RequestMapping(value = "/completeChallenge/{id}", method = RequestMethod.PUT, produces = MediaType.TEXT_PLAIN_VALUE)
-        public String  tcompleteChallengeMethod(@RequestParam Participation  p){
-            if(p  ==  null)
+        public String  tcompleteChallengeMethod(@RequestParam int  participationId){
+            if(participationId  ==  0)
                 return "Object is null";
-            dbm.completeChallenge(p);
+            dbm.completeChallenge(participationId);
             return "Success";
         }
 
