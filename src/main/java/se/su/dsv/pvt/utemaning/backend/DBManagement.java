@@ -308,6 +308,25 @@ public class DBManagement {
     }
 
     /**
+     * method for retriving one user on a userID from the database
+     * @param userId the is of the user
+     * @return user object
+     */
+    public User getOneUserOnId(int userId){
+        String sqlQuery = ("SELECT * FROM User WHERE UserID = '"+ userId + "' ");
+        CachedRowSet crs = ctpdb.getData(sqlQuery);
+        User user = null;
+        try{
+            while(crs.next()){
+                user = userBuilder(crs);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return user;
+    }
+
+    /**
      * method for creating user. takes 1 row from table and transforms that into a ser object.
      *
      * @param crs 1 row from the table
