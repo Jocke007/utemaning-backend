@@ -522,16 +522,16 @@ public class DBManagement {
     }
 
     /**
-     * method for ranking a gym
+     * method for rating a gym
      * @param workoutSpotID the gym
      * @param userName the user
-     * @param rank the rating
+     * @param rating the rating
      * @return true or false
      */
-    public boolean addRank(int workoutSpotID, String userName, int rank) {
+    public boolean addRating(int workoutSpotID, String userName, int rating) {
 
         String sqlQuery = ("INSERT INTO WorkoutSpotRanks SET WorkoutSpotId = '" + workoutSpotID + "' " +
-                ", UserName = '" + userName + "' , Rating = '" + rank + "' ");
+                ", UserName = '" + userName + "' , Rating = '" + rating + "' ");
         boolean success = ctpdb.insertData(sqlQuery);
         if (!success) {
             errorMessage = getErrorMessage();
@@ -637,13 +637,13 @@ public class DBManagement {
      *
      * @param workoutSpotId the outdoorgym identifier
      * @param userName      the user identifier
-     * @param rank          the new rank
+     * @param rating          the new rank
      * @return returns true and false depending on success
      * <p>
      * tested 16/5 and works as intended
      */
-    public boolean alterRank(int workoutSpotId, String userName, int rank) {
-        String sqlQuery = ("UPDATE WorkoutSpotRanks SET Rating = '" + rank + "' WHERE WorkoutSpotId = '" + workoutSpotId + "' " +
+    public boolean alterRating(int workoutSpotId, String userName, int rating) {
+        String sqlQuery = ("UPDATE WorkoutSpotRanks SET Rating = '" + rating + "' WHERE WorkoutSpotId = '" + workoutSpotId + "' " +
                 "AND userName = '" + userName + "' ");
         boolean success = ctpdb.insertData(sqlQuery);
         if (!success) {
