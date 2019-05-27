@@ -93,10 +93,17 @@ public class BackendApplication {
             return "Object received";
         }
 
-        @RequestMapping(value = "/createParticipation", method = RequestMethod.POST, produces = MediaType.TEXT_PLAIN_VALUE)
-        public String createNewChallengeMethod(@RequestBody Challenge c, User u){
-            if(c == null ||  u == null)
-                return "Input was null";
+        @RequestMapping(value = "/createParticipation/user/{userID}/challenge/{challengeID}", method = RequestMethod.POST, produces = MediaType.TEXT_PLAIN_VALUE)
+        public String createNewChallengeMethod(@PathVariable("userID") int userID, @PathVariable("challengeID")  int challengeID){
+
+            Challenge c = dbm.getSpecificChallenge(challengeID);
+            User u = dbm.getOneUserOnId(userID);
+
+            if(c == null)
+                return "Challenge does not exist";
+            if(u == null)
+                return "User does not exist";
+
             dbm.addParticipation(c, u);
             return "success";
         }
@@ -113,9 +120,8 @@ public class BackendApplication {
             return "Fungerar";
         }
 
-        @RequestMapping(value = "/removeParticipation/{id}", method = RequestMethod.PUT)
-
         //changed input to participation ID instead
+        @RequestMapping(value = "/removeParticipation/{id}", method = RequestMethod.PUT)
         public String removeParticipationMethod(@PathVariable("id") int participationId){
             //changed from p == null to participationID == 0 as ints cant be null
             if(participationId == 0)
