@@ -626,7 +626,7 @@ public class DBManagement {
      */
     public boolean completeChallenge(int participationId) {
         String sqlQuery = ("UPDATE Participation SET Completed = '" + 1 + "' " +
-                "WHERE ParticipatioId = '" + participationId + "' ");
+                "WHERE ParticipationId = '" + participationId + "' ");
         boolean success = ctpdb.insertData(sqlQuery);
         if (!success) {
             errorMessage = ctpdb.getErrorMessage();
