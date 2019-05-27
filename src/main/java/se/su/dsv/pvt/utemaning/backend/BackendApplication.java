@@ -131,13 +131,19 @@ public class BackendApplication {
             return "Success";
         }
 
-        @RequestMapping (value = "/rankGym", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-        public String createNewRank(@RequestBody int workoutSpotID, int userID, int rank){
+        @RequestMapping (value = "/rateGym/gym/{gymID}/user/{userID}/rank/{rate}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+        public String createNewRate(@PathVariable("gymID") int workoutSpotID, @PathVariable("userID") int userID, @PathVariable("rate") int rate){
             if(workoutSpotID  ==  0)
                 return "object is null";
 
+            if(rate < 1 || rate > 5)
+                return "Not a valid rating. Please enter a value between 1 and 5";
+
             User user = dbm.getOneUserOnId(userID);
-            dbm.addRank(workoutSpotID,user.getUserName(),rank);
+            if(user ==  null)
+                return "User does not exist";
+
+            dbm.addRank(workoutSpotID,user.getUserName(),rate);
             return "Success";
         }
 
