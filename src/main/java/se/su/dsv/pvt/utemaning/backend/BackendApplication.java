@@ -143,7 +143,7 @@ public class BackendApplication {
             if(user ==  null)
                 return "User does not exist";
 
-            dbm.addRank(workoutSpotID,user.getUserName(),rate);
+            dbm.addRating(workoutSpotID,user.getUserName(),rate);
             return "Success";
         }
 
