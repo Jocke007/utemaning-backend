@@ -159,12 +159,13 @@ public class BackendApplication {
         }
 
         @RequestMapping(value = "/completeChallenge/{id}", method = RequestMethod.PUT, produces = MediaType.TEXT_PLAIN_VALUE)
-        public String  tcompleteChallengeMethod(@RequestParam int  participationId){
+        public String  completeChallengeMethod(@PathVariable("id") int  participationId){
             if(participationId  ==  0)
                 return "Object is null";
             dbm.completeChallenge(participationId);
             return "Success";
         }
+
         @RequestMapping(value = "/getParticipation/{userID}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
         public ArrayList<Participation> getParticipation(@PathVariable("userID") int id){
             User u  = dbm.getOneUserOnId(id);
