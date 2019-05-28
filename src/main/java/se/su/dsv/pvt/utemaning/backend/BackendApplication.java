@@ -198,6 +198,22 @@ public class BackendApplication {
 
             return "success";
         }
+        @RequestMapping(value = "/getChallenges/{userID}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+        public ArrayList<Challenge> getChallenges(@PathVariable("userID") int id){
+            User u  = dbm.getOneUserOnId(id);
+            ArrayList<Challenge> challengeCollection = new ArrayList<>();
+            ArrayList<Participation> participationCollection;
+            participationCollection = dbm.getParticipations(u.getUserName(), 0);
+
+            for(Participation participation : participationCollection){
+                int challengeID = participation.getChallengeID();
+                Challenge challenge = dbm.getSpecificChallenge(challengeID);
+                challengeCollection.add(challenge);
+            }
+            testString = challengeCollection.toString();
+
+            return challengeCollection;
+        }
 
     }
 
