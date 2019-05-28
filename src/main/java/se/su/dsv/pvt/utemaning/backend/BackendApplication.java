@@ -195,6 +195,12 @@ public class BackendApplication {
         @RequestMapping(value = "/login/{userName}/{password}", method = RequestMethod.GET, produces = MediaType.TEXT_PLAIN_VALUE)
         public String login(@PathVariable("userName")String userName, @PathVariable("password")String password){
 
+            User user = dbm.getOneUser(userName);
+            if(user == null){
+                return"Fail, user does not exist";
+            }
+            if(!user.getPassword().equals(password))
+                return "Password is wrong";
 
             return "success";
         }
