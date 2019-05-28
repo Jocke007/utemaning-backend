@@ -21,6 +21,14 @@ public class Challenge {
         this.description = description;
     }
 
+    @Override
+    public String toString() {
+        return "Challenge{" +
+                "name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                '}';
+    }
+
     public String getName() {
         return name;
     }

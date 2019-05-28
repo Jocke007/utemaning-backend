@@ -26,4 +26,14 @@ public class Participation {
     public int getParticipationID() {
         return participationID;
     }
+
+    @Override
+    public String toString() {
+        return "Participation{" +
+                "user=" + user +
+                ", challengeID=" + challengeID +
+                ", participationID=" + participationID +
+                ", completed=" + completed +
+                '}';
+    }
 }
