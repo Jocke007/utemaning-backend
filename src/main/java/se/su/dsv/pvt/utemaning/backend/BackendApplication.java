@@ -189,7 +189,10 @@ public class BackendApplication {
                 return "Password not valid";
 
             dbm.addUser(userName, password);
-            return "User created";
+
+            User user = dbm.getOneUser(userName);
+
+            return user.getUserID() + "";
         }
 
         @RequestMapping(value = "/login/{userName}/{password}", method = RequestMethod.GET, produces = MediaType.TEXT_PLAIN_VALUE)
@@ -202,7 +205,7 @@ public class BackendApplication {
             if(!user.getPassword().equals(password))
                 return "Password is wrong";
 
-            return "success";
+            return user.getUserID() +  "";
         }
         @RequestMapping(value = "/getChallenges/{userID}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
         public ArrayList<Challenge> getChallenges(@PathVariable("userID") int id){
