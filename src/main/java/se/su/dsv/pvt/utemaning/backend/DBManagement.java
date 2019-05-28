@@ -411,16 +411,13 @@ public class DBManagement {
      * successfull, if a fail it will automaticly retrive the errormessage and hold it if its needed.
      *
      * @param userName  the username of the user to be added
-     * @param firstName firstname of the user
-     * @param lastName  lastname of the user
-     * @param Email     email adress of the user
+     * @param password user password
      * @return boolean true or false depending on result
      * <p>
      * TESTED 15/5 AND WOKRS AS INTENDED
      */
-    public boolean addUser(String userName, String firstName, String lastName, String Email) {
-        String sqlQuery = ("INSERT INTO User SET UserName = '" + userName + "', FirstName = '"
-                + firstName + "', LastName = '" + lastName + "', Email ='" + Email + "'");
+    public boolean addUser(String userName, String password) {
+        String sqlQuery = ("INSERT INTO User SET UserName = '" + userName + "' , Password = '"+ password + "' ");
         boolean success = ctpdb.insertData(sqlQuery);
         if (!success) {
             errorMessage = ctpdb.getErrorMessage();

@@ -188,6 +188,7 @@ public class BackendApplication {
             if(password == null)
                 return "Password not valid";
 
+            dbm.addUser(userName, password);
             return "User created";
         }
 
