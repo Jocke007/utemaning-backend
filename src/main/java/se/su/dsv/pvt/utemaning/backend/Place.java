@@ -18,7 +18,6 @@ public abstract class Place {
         this.id =  id;
         this.uniqueId = uniqueId;
         this.averageRating = averageRating;
-
     }
 
     public void addChallange(Challenge newChallenge){

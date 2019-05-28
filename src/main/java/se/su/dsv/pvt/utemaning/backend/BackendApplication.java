@@ -180,6 +180,24 @@ public class BackendApplication {
 
             return participationCollection;
         }
+
+        @RequestMapping(value = "/createUser/{userName}/{password}", method = RequestMethod.POST, produces = MediaType.TEXT_PLAIN_VALUE)
+        public String createUser(@PathVariable("userName")String userName, @PathVariable("password")String password){
+            if(userName == null)
+                return "User name not valid";
+            if(password == null)
+                return "Password not valid";
+
+            return "User created";
+        }
+
+        @RequestMapping(value = "/login/{userNamme}/{password}", method = RequestMethod.GET, produces = MediaType.TEXT_PLAIN_VALUE)
+        public String login(@PathVariable("userName")String userName, @PathVariable("password")String password){
+
+
+            return "success";
+        }
+
     }
 
     @RestController
