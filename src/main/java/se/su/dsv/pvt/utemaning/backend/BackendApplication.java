@@ -191,7 +191,7 @@ public class BackendApplication {
             return "User created";
         }
 
-        @RequestMapping(value = "/login/{userNamme}/{password}", method = RequestMethod.GET, produces = MediaType.TEXT_PLAIN_VALUE)
+        @RequestMapping(value = "/login/{userName}/{password}", method = RequestMethod.GET, produces = MediaType.TEXT_PLAIN_VALUE)
         public String login(@PathVariable("userName")String userName, @PathVariable("password")String password){
 
 
