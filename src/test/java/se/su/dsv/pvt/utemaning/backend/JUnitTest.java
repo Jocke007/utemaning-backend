@@ -6,7 +6,7 @@ import org.junit.Test;
 public class JUnitTest {
     @Test
     public void createUserTest() {
-        User newUser = new User("Test", 123, "Test", "Testsson", "testaren@haringen.stansattgå");
+        User newUser = new User("Test", 123, "Test");
         Assert.assertEquals("Test", newUser.getUserName());
         Assert.assertEquals(123, newUser.getUserID());
     }
