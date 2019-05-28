@@ -5,18 +5,16 @@ import java.util.ArrayList;
 
 public class User {
 
-    private String userName, password, firstName, lastName, email;
+    private String userName, password;
     private int userID;
-    //private String password; Modified by Michel
+
     private ArrayList<Challenge> challangeParticipationList = new ArrayList<>();
 
-    public User (String userName, int userID, String firstName, String lastName, String email){
+    public User (String userName, int userID, String password){
         this.userName = userName;
         this.userID = userID;
-        // this.password = password; modified by Michel
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
+        this.password = password;
+
     }
 
     //public void changePassword(String newPassword){ Modified by Michel
@@ -30,6 +28,7 @@ public class User {
     public int getUserID() {
         return userID;
     }
-
-
+    public String getPassword(){
+        return password;
+    }
 }

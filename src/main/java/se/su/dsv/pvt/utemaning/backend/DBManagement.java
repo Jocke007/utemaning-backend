@@ -339,10 +339,8 @@ public class DBManagement {
         try {
             int userId = crs.getInt("UserID");
             String userName = crs.getString("UserName");
-            String firstName = crs.getString("FirstName");
-            String lastName = crs.getString("LastName");
-            String email = crs.getString("EMail");
-            user = new User(userName, userId, firstName, lastName, email);
+            String password = crs.getString("Password");
+            user = new User(userName, userId, password);
         } catch (SQLException e) {
             e.printStackTrace();
         }
