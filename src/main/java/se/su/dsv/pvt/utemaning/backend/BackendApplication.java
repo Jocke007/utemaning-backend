@@ -77,14 +77,16 @@ public class BackendApplication {
             return allGyms;
         }
 
-        @RequestMapping(value = "/createChallenge", method = RequestMethod.POST, produces = MediaType.TEXT_PLAIN_VALUE)
-        public String createNewChallengeMethod(@RequestBody Challenge c) {
+        @RequestMapping(value = "/user/{userID}/createChallenge", method = RequestMethod.POST, produces = MediaType.TEXT_PLAIN_VALUE)
+        public String createNewChallengeMethod(@PathVariable("userID") int id, @RequestBody Challenge c)  {
 
             if(c == null) {
                 return "The entered object is null";
             }
             c.setTimeAndDate();
             dbm.addChallenge(c);
+            User u = dbm.getOneUserOnId(id);
+            dbm.addParticipation(c,u);
 
 
             //Rätt URI?
