@@ -84,9 +84,10 @@ public class BackendApplication {
                 return "The entered object is null";
             }
             c.setTimeAndDate();
-            dbm.addChallenge(c);
+            int challengeID = dbm.addChallenge(c);
+            Challenge challenge = dbm.getSpecificChallenge(challengeID);
             User u = dbm.getOneUserOnId(id);
-            dbm.addParticipation(c,u);
+            dbm.addParticipation(challenge,u);
 
 
             //Rätt URI?
@@ -96,7 +97,7 @@ public class BackendApplication {
         }
 
         @RequestMapping(value = "/createParticipation/user/{userID}/challenge/{challengeID}", method = RequestMethod.POST, produces = MediaType.TEXT_PLAIN_VALUE)
-        public String createNewChallengeMethod(@PathVariable("userID") int userID, @PathVariable("challengeID")  int challengeID){
+        public String createNewParticipationMethod(@PathVariable("userID") int userID, @PathVariable("challengeID")  int challengeID){
 
             Challenge c = dbm.getSpecificChallenge(challengeID);
             User u = dbm.getOneUserOnId(userID);

@@ -128,6 +128,32 @@ public class ConnectionToPasiDB {
         }return i;
     }
 
+    public int addAndReturnIncrementValueChallenge (String sqlQuery) {
+        int i = 0;
+        try {
+            //finds the driver
+            Class.forName(driverName);
+            //creates connection
+            Connection con = DriverManager.getConnection(urlName, databaseName, password);
+            //creates a prepared statement
+            PreparedStatement pstm = con.prepareStatement(sqlQuery, Statement.RETURN_GENERATED_KEYS);
+            //execution of the statement and returns the generated keys in the resultSet
+            pstm.execute();
+            ResultSet rs = pstm.getGeneratedKeys();
+            while (rs.next()) {
+                i = rs.getInt("ChallengeID");
+            }
+            pstm.close();
+            con.close();
+        } catch (ClassNotFoundException e) {
+            errorMessage = e.getMessage();
+            e.printStackTrace();
+        } catch (SQLException e) {
+            errorMessage = e.getMessage();
+            e.printStackTrace();
+        }return i;
+    }
+
     /**
      * method for retriving the error message if it is needed.
      * @return exception in the form of a string.
