@@ -466,7 +466,7 @@ public class DBManagement {
      * tested 15/5 and works as intended
      */
 
-    public boolean addChallenge(Challenge challenge) {
+    public int addChallenge(Challenge challenge) {
         int workoutSpotID = challenge.getWorkoutSpotID();
         String name = challenge.getName();
         java.util.Date date2 = challenge.getDate();
@@ -475,12 +475,12 @@ public class DBManagement {
         String sqlQuery = ("INSERT INTO Challenge SET WorkoutSpotid = '" + workoutSpotID
                 + "' , ChallengeName = '" + name + "' , Date = '" + date2.toInstant() +
                 "' , Description = '" + desc + "' , Participants = '0' , Expired = '" + 0 + "' ");
-        boolean success = ctpdb.insertData(sqlQuery);
-        if (!success) {
+        int challengeID = ctpdb.addAndReturnIncrementValueChallenge(sqlQuery);
+        if (challengeID == 0) {
             errorMessage = ctpdb.getErrorMessage();
-            return false;
+            return 0;
         }
-        return success;
+        return challengeID;
     }
 
     /**
