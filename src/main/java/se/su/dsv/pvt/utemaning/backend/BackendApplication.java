@@ -226,6 +226,19 @@ public class BackendApplication {
             return challengeCollection;
         }
 
+        @RequestMapping(value = "/getCompletedChallenges/{userID}", method = RequestMethod.GET, produces = MediaType.TEXT_PLAIN_VALUE)
+        public String getCompletedChallenges(@PathVariable("userID") int id){
+            User u  = dbm.getOneUserOnId(id);
+            ArrayList<Participation> participationCollection;
+            participationCollection = dbm.getParticipations(u.getUserName(), 0);
+            int count = 0;
+
+            for(Participation p : participationCollection){
+                if(p.getCompleted() == true)
+                    count += 1;
+            }
+            return "" + count;
+        }
     }
 
     @RestController
