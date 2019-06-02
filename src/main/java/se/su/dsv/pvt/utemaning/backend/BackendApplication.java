@@ -67,7 +67,7 @@ public class BackendApplication {
     //new FetchJSONFromAPI().parseFromAllOutdoorGyms();
 
     @RestController
-    public class UtemaningRestController{
+    public class UtemaningRestController {
 
         @RequestMapping(value = "/allGyms", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
         public @ResponseBody
@@ -78,16 +78,16 @@ public class BackendApplication {
         }
 
         @RequestMapping(value = "/user/{userID}/createChallenge", method = RequestMethod.POST, produces = MediaType.TEXT_PLAIN_VALUE)
-        public String createNewChallengeMethod(@PathVariable("userID") int id, @RequestBody Challenge c)  {
+        public String createNewChallengeMethod(@PathVariable("userID") int id, @RequestBody Challenge c) {
 
-            if(c == null) {
+            if (c == null) {
                 return "The entered object is null";
             }
             c.setTimeAndDate();
             int challengeID = dbm.addChallenge(c);
             Challenge challenge = dbm.getSpecificChallenge(challengeID);
             User u = dbm.getOneUserOnId(id);
-            dbm.addParticipation(challenge,u);
+            dbm.addParticipation(challenge, u);
 
 
             //Rätt URI?
@@ -97,14 +97,14 @@ public class BackendApplication {
         }
 
         @RequestMapping(value = "/createParticipation/user/{userID}/challenge/{challengeID}", method = RequestMethod.POST, produces = MediaType.TEXT_PLAIN_VALUE)
-        public String createNewParticipationMethod(@PathVariable("userID") int userID, @PathVariable("challengeID")  int challengeID){
+        public String createNewParticipationMethod(@PathVariable("userID") int userID, @PathVariable("challengeID") int challengeID) {
 
             Challenge c = dbm.getSpecificChallenge(challengeID);
             User u = dbm.getOneUserOnId(userID);
 
-            if(c == null)
+            if (c == null)
                 return "Challenge does not exist";
-            if(u == null)
+            if (u == null)
                 return "User does not exist";
 
             dbm.addParticipation(c, u);
@@ -112,7 +112,7 @@ public class BackendApplication {
         }
 
         @RequestMapping(value = "removeChallenge/{id}", method = RequestMethod.PUT, produces = MediaType.TEXT_PLAIN_VALUE)
-        public String removeChallengemethod(@PathVariable("id") int challengeID){
+        public String removeChallengemethod(@PathVariable("id") int challengeID) {
 
 
             Challenge c = dbm.getSpecificChallenge(challengeID);
@@ -122,29 +122,34 @@ public class BackendApplication {
 
         //changed input to participation ID instead
         @RequestMapping(value = "/removeParticipation/{id}", method = RequestMethod.PUT)
-        public String removeParticipationMethod(@PathVariable("id") int participationId){
+        public String removeParticipationMethod(@PathVariable("id") int participationId) {
             //changed from p == null to participationID == 0 as ints cant be null
-            if(participationId == 0)
+            if (participationId == 0)
                 return "The object is null";
 
             dbm.removeParticipation(participationId);
             return "Success";
         }
 
-        @RequestMapping (value = "/rateGym/gym/{gymID}/user/{userID}/rate/{rate}", method = RequestMethod.POST, produces = MediaType.TEXT_PLAIN_VALUE)
-        public String createNewRate(@PathVariable("gymID") int workoutSpotID, @PathVariable("userID") int userID, @PathVariable("rate") int rate){
-            if(workoutSpotID  ==  0)
+        @RequestMapping(value = "/rateGym/gym/{gymID}/user/{userID}/rate/{rate}", method = RequestMethod.POST, produces = MediaType.TEXT_PLAIN_VALUE)
+        public String createNewRate(@PathVariable("gymID") int workoutSpotID, @PathVariable("userID") int userID, @PathVariable("rate") int rate) {
+            if (workoutSpotID == 0)
                 return "object is null";
 
-            if(rate < 1 || rate > 5)
+            if (rate < 1 || rate > 5)
                 return "Not a valid rating. Please enter a value between 1 and 5";
 
             User user = dbm.getOneUserOnId(userID);
-            if(user ==  null)
+            if (user == null)
                 return "User does not exist";
 
-            dbm.addRating(workoutSpotID,user.getUserName(),rate);
-            return "Success";
+            boolean success = dbm.addRating(workoutSpotID, user.getUserName(), rate);
+
+            if (success)
+                return "Success";
+            else{
+                return "user has already rated this gym";
+            }
         }
 
 //        @CrossOrigin
@@ -167,16 +172,16 @@ public class BackendApplication {
         }
 
         @RequestMapping(value = "/completeChallenge/{id}", method = RequestMethod.PUT, produces = MediaType.TEXT_PLAIN_VALUE)
-        public String  completeChallengeMethod(@PathVariable("id") int  participationId){
-            if(participationId  ==  0)
+        public String completeChallengeMethod(@PathVariable("id") int participationId) {
+            if (participationId == 0)
                 return "Object is null";
             dbm.completeChallenge(participationId);
             return "Success";
         }
 
         @RequestMapping(value = "/getParticipation/{userID}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-        public ArrayList<Participation> getParticipation(@PathVariable("userID") int id){
-            User u  = dbm.getOneUserOnId(id);
+        public ArrayList<Participation> getParticipation(@PathVariable("userID") int id) {
+            User u = dbm.getOneUserOnId(id);
             ArrayList<Participation> participationCollection;
             participationCollection = dbm.getParticipations(u.getUserName(), 0);
             testString = participationCollection.toString();
@@ -185,10 +190,10 @@ public class BackendApplication {
         }
 
         @RequestMapping(value = "/createUser/{userName}/{password}", method = RequestMethod.POST, produces = MediaType.TEXT_PLAIN_VALUE)
-        public String createUser(@PathVariable("userName")String userName, @PathVariable("password")String password){
-            if(userName == null)
+        public String createUser(@PathVariable("userName") String userName, @PathVariable("password") String password) {
+            if (userName == null)
                 return "User name not valid";
-            if(password == null)
+            if (password == null)
                 return "Password not valid";
 
             dbm.addUser(userName, password);
@@ -199,25 +204,26 @@ public class BackendApplication {
         }
 
         @RequestMapping(value = "/login/{userName}/{password}", method = RequestMethod.GET, produces = MediaType.TEXT_PLAIN_VALUE)
-        public String login(@PathVariable("userName")String userName, @PathVariable("password")String password){
+        public String login(@PathVariable("userName") String userName, @PathVariable("password") String password) {
 
             User user = dbm.getOneUser(userName);
-            if(user == null){
-                return"Fail, user does not exist";
+            if (user == null) {
+                return "Fail, user does not exist";
             }
-            if(!user.getPassword().equals(password))
+            if (!user.getPassword().equals(password))
                 return "Password is wrong";
 
-            return user.getUserID() +  "";
+            return user.getUserID() + "";
         }
+
         @RequestMapping(value = "/getChallenges/{userID}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-        public ArrayList<Challenge> getChallenges(@PathVariable("userID") int id){
-            User u  = dbm.getOneUserOnId(id);
+        public ArrayList<Challenge> getChallenges(@PathVariable("userID") int id) {
+            User u = dbm.getOneUserOnId(id);
             ArrayList<Challenge> challengeCollection = new ArrayList<>();
             ArrayList<Participation> participationCollection;
             participationCollection = dbm.getParticipations(u.getUserName(), 0);
 
-            for(Participation participation : participationCollection){
+            for (Participation participation : participationCollection) {
                 int challengeID = participation.getChallengeID();
                 Challenge challenge = dbm.getSpecificChallenge(challengeID);
                 challengeCollection.add(challenge);
@@ -228,14 +234,14 @@ public class BackendApplication {
         }
 
         @RequestMapping(value = "/getCompletedChallenges/{userID}", method = RequestMethod.GET, produces = MediaType.TEXT_PLAIN_VALUE)
-        public String getCompletedChallenges(@PathVariable("userID") int id){
-            User u  = dbm.getOneUserOnId(id);
+        public String getCompletedChallenges(@PathVariable("userID") int id) {
+            User u = dbm.getOneUserOnId(id);
             ArrayList<Participation> participationCollection;
             participationCollection = dbm.getParticipations(u.getUserName(), 0);
             int count = 0;
 
-            for(Participation p : participationCollection){
-                if(p.getCompleted() == true)
+            for (Participation p : participationCollection) {
+                if (p.getCompleted() == true)
                     count += 1;
             }
             return "" + count;
@@ -243,13 +249,13 @@ public class BackendApplication {
     }
 
     @RestController
-    public class tests{
+    public class tests {
 
         @PostMapping(path = "/addString", produces = MediaType.TEXT_PLAIN_VALUE)
-        public String changeStringMethod(@RequestBody String s){
-            if((s == null) || s.equals("")) {
+        public String changeStringMethod(@RequestBody String s) {
+            if ((s == null) || s.equals("")) {
                 testString = "you tried but it didn't work";
-               return "fungerar ej";
+                return "fungerar ej";
 
             }
 
